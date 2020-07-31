@@ -6,7 +6,7 @@ import logo from './logo.svg';
 
 const header = React.createElement(
     'h1',
-    { className: 'header_title'},
+    { className: 'App-header'},
     'Hello React!'
 );
 
@@ -14,7 +14,7 @@ function App() {
     return (
         <div className="App">
             { header }
-            <Icon logo={logo}/>
+            <Icon className="App-logo" logo={logo}/>
             <List title={"List header"} items={['a', 'b', 'c', 'd']}/>
         </div>
     );
