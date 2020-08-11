@@ -1,0 +1,27 @@
+@import "../../styles/colors.scss";
+
+.Search {
+  display: flex;
+  width: 100%;
+
+  .SearchInput {
+    background-color: rgba(red($black), green($black), blue($black), 0.75);
+    font-size: 14px;
+    padding: 10px;
+    margin-right: 10px;
+    width: 100%;
+    border-radius: 3px;
+    border: none;
+    caret-color: $white;
+    color: $white;
+
+    &:focus, &:hover {
+      outline: none;
+      background-color: $black;
+    }
+  }
+
+  .ActionButton {
+    padding: 10px 40px;
+  }
+}

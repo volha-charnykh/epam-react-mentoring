@@ -1,0 +1,11 @@
+@import "../../styles/colors.scss";
+
+.Logo {
+  background-color: transparent;
+  color: $red;
+  font-size: 14px;
+
+  .LogoBold {
+    font-weight: 600;
+  }
+}

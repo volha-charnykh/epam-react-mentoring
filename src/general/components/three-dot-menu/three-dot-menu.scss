@@ -1,0 +1,16 @@
+@import "../../styles/colors.scss";
+
+.ThreeDots {
+  background-color: $black;
+  position: absolute;
+  padding: 0 5px 0 8px;
+  margin: 5px;
+  opacity: 0.75;
+  border-radius: 20px;
+  text-align: center;
+
+  &:after {
+    content: '\2807';
+    font-size: 20px;
+  }
+}

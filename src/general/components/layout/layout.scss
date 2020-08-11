@@ -1,0 +1,22 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  flex-basis: 935px;
+
+  .Layout-Header {
+    margin-bottom: 5px;
+    height: 300px;
+  }
+
+  .Layout-Footer,
+  .Layout-Header {
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .Layout-Content {
+    width: 100%;
+  }
+}

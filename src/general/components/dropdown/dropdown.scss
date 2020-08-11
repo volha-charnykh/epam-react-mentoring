@@ -1,0 +1,11 @@
+@import "../../styles/colors.scss";
+
+.DropdownContainer {
+  position: relative;
+  width: 110px;
+  text-align: end;
+
+  .MenuPanel {
+    text-align: start;
+  }
+}

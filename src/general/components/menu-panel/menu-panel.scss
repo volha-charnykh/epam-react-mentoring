@@ -1,0 +1,33 @@
+@import "../../styles/colors.scss";
+
+.MenuPanel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  background-color: $black;
+  border: 2px solid rgba(0, 0, 0, .25);
+  background-clip: padding-box;
+  border-radius: .25rem;
+  padding: 5px 0;
+  color: $white;
+  z-index: 1;
+
+  .MenuPanelCloseMark {
+    cursor: pointer;
+    text-align: end;
+    margin: 0 10px -5px;
+  }
+
+  .MenuPanelItem {
+    padding: 10px 15px;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 70px;
+
+    &:hover {
+      background-color: $red;
+      opacity: 0.75;
+    }
+  }
+}

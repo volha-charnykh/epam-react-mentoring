@@ -1,0 +1,40 @@
+@import "../../../general/styles/colors.scss";
+
+.FilmItem {
+  display: flex;
+  flex-direction: column;
+  color: $light-grey;
+  margin-bottom: 30px;
+  position: relative;
+  width: 220px;
+
+  .ThreeDots, .MenuPanel {
+    right: 0;
+  }
+
+  .FilmImage {
+    height: 310px;
+  }
+
+  .FilmTitleContainer {
+    margin: 10px 0 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .FilmTitle {
+      font-size: 14px;
+    }
+
+    .FilmReleaseDate {
+      font-size: 10px;
+      border: 1px solid $grey;
+      border-radius: 3px;
+      padding: 3px 10px;
+    }
+  }
+
+  .FilmOverview {
+    font-size: 10px;
+  }
+}

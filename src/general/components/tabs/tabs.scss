@@ -1,0 +1,40 @@
+@import "../../styles/colors.scss";
+
+
+.Tabs-Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 2px solid $dark-grey;
+  text-transform: uppercase;
+  padding: 15px 0;
+
+  .Tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .Tab {
+      margin: 0 20px -17px 0;
+      cursor: pointer;
+
+      &.Active {
+        border-bottom: 2px solid $red;
+      }
+    }
+  }
+
+  .RightSide {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    >* {
+      margin-left: 10px;
+    }
+  }
+}
+
+.TabsContent {
+
+}
