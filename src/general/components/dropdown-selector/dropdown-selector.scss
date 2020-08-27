@@ -1,0 +1,21 @@
+.DropdownSelector {
+  position: relative;
+
+  .DropdownSelectorButton {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    user-select: none;
+
+    &.DropdownButtonTriangle:after {
+      height: 5px;
+      margin-top: 5px;
+    }
+  }
+
+  .Panel {
+    width: 100%;
+    right: 0;
+  }
+}
+

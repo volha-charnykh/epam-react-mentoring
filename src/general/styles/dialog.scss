@@ -1,0 +1,36 @@
+@import "./colors.scss";
+
+.DialogContainer {
+  padding: 10px 50px;
+
+  .DialogTitle {
+    text-transform: uppercase;
+    font-size: 24px;
+    margin-bottom: 40px;
+    user-select: none;
+    cursor: default;
+  }
+
+  .DialogDescription {
+    font-size: 14px;
+    margin-top: -10px;
+  }
+}
+
+.DialogActionContainer {
+  padding: 20px 50px 50px;
+  text-align: end;
+  > * {
+    margin-left: 10px;
+  }
+}
+
+.DialogBackground {
+  position: fixed;
+  background-color: rgba(red($black), green($black), blue($black), 0.8);
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}

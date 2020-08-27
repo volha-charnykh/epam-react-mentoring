@@ -1,0 +1,51 @@
+@import "../../styles/colors.scss";
+
+.Dialog {
+  position: fixed;
+  z-index: 101;
+  background: $black;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .3),
+  0 0 10px rgba(0, 0, 0, .3);
+  width: 600px;
+  min-height: 230px;
+  top: 10%;
+  left: calc((100vw - 600px) / 2);
+
+  .DialogCloseMark {
+    font-size: 20px;
+    margin: 15px;
+    cursor: pointer;
+    text-align: end;
+
+    .Cross {
+      width: 20px;
+      height: 20px;
+      position: relative;
+      margin-left: auto;
+
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 2px;
+        background-color: $white;
+        border-radius: 1px;
+        top: 8px;
+      }
+
+      &:before {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        transform: rotate(45deg);
+        left: 1px;
+      }
+
+      &:after {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        right: 1px;
+      }
+    }
+  }
+}

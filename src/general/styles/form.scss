@@ -1,0 +1,30 @@
+@import "./colors.scss";
+
+.Input {
+  font-size: 14px;
+  padding: 10px;
+  margin-right: 10px;
+  width: calc(100% - 20px);
+  border-radius: 3px;
+  border: none;
+  background-color: $dark-grey;
+  caret-color: $white;
+  color: $white;
+  opacity: 0.5;
+  outline: none;
+
+  &:focus, &:hover {
+    opacity: 1;
+  }
+}
+
+.DarkInput {
+  @extend .Input;
+  background-color: rgba(red($black), green($black), blue($black), 0.75);
+  opacity: 1;
+
+  &:focus, &:hover {
+    outline: none;
+    background-color: $black;
+  }
+}

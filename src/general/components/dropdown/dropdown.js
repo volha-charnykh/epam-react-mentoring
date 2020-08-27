@@ -12,21 +12,17 @@ Dropdown.propTypes = {
 
 export default function Dropdown(props) {
     const [isOpen, setOpen] = useState(false);
-    const [selectedItem, setSelectedItem] =
-        useState(props.selected || props.items[0]);
 
     const onItemSelected = (el) => {
-        console.log('Filter by ', el.title);
-        setSelectedItem(el);
         setOpen(false);
         props.onItemSelected(el);
     }
     return (
         <div className='DropdownContainer'>
             <div
-                className='DropdownButton'
+                className='DropdownButton DropdownButtonTriangle'
                 onClick={() => setOpen(!isOpen)}>
-                {selectedItem.title}
+                {props.selected && props.selected.title || 'Select Option'}
             </div>
             {
                 isOpen &&

@@ -1,32 +1,26 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './menu-panel.scss';
 import PropTypes from 'prop-types';
+import Panel from "../panel/panel";
 
 export const menuItemType = PropTypes.shape({
     title: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired
+    id: PropTypes.number.isRequired,
+    selected: PropTypes.bool
 });
 
 MenuPanel.propTypes = {
     items: PropTypes.arrayOf(menuItemType).isRequired,
     closable: PropTypes.bool,
+    onClose: PropTypes.func,
     onItemSelected: PropTypes.func.isRequired
 }
 
 export default function MenuPanel(props) {
-    const [items] = useState(props.items);
-    const [displayClose] = useState(props.closable);
-
     return (
-        <div className='MenuPanel'>
+        <Panel closable={props.closable} onClose={props.onClose}>
             {
-                displayClose &&
-                <span
-                    className='MenuPanelCloseMark'
-                    onClick={props.onClose}>x</span>
-            }
-            {
-                items.map(item =>
+                props.items.map(item =>
                     <span
                         className='MenuPanelItem'
                         key={item.id}
@@ -35,6 +29,6 @@ export default function MenuPanel(props) {
                     </span>
                 )
             }
-        </div>
+        </Panel>
     );
 }

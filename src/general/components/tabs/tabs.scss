@@ -17,6 +17,7 @@
     .Tab {
       margin: 0 20px -17px 0;
       cursor: pointer;
+      user-select: none;
 
       &.Active {
         border-bottom: 2px solid $red;

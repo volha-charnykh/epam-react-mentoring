@@ -1,6 +1,7 @@
 import React from 'react';
 import './search-box.scss';
 import '../../styles/buttons.scss';
+import '../../styles/form.scss';
 import PropTypes from 'prop-types';
 
 SearchBox.propTypes = {
@@ -17,10 +18,11 @@ export default function SearchBox(props) {
         <div className='Search'>
             <input
                 name="search"
-                className='SearchInput'
+                className='DarkInput'
                 placeholder='What do you want to watch?'
+                onKeyDown={event => event.key === "Enter" && search()}
                 onChange={(event) => text = event.target.value}/>
-            <div className='ActionButton' onClick={search}>
+            <div className='PrimaryButton' onClick={search}>
                 {props.searchButtonLabel || 'Search'}
             </div>
         </div>

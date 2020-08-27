@@ -1,0 +1,61 @@
+@import "../../styles/colors.scss";
+
+.Checkbox {
+  font-size: 14px;
+  user-select: none;
+  cursor: default;
+  padding: 5px 30px;
+  position: relative;
+
+  .checkmark {
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    height: 12px;
+    width: 12px;
+    background-color: $white;
+    border-radius: 2px;
+  }
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* On mouse-over, add a grey background color */
+  &:hover input ~ .checkmark {
+    background-color: $light-grey;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  > input:checked ~ .checkmark {
+    background-color: $red;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  > input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  > .checkmark:after {
+    width: 3px;
+    height: 7px;
+    left: 3px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}

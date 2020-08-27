@@ -4,6 +4,8 @@
   background-color: transparent;
   color: $red;
   font-size: 14px;
+  user-select: none;
+  cursor: default;
 
   .LogoBold {
     font-weight: 600;
