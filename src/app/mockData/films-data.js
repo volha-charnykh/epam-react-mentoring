@@ -13,11 +13,12 @@ export const allFilms = Array.from(Array(20).keys()).map(el => (
     {
         id: el,
         title: `Title of Film ${el}`,
-        releaseDate: '2000-10-12',
+        releaseDate: String(Math.floor(1980 + Math. random() * 40)) + '-01-01',
         url: 'http://test.com',
         image: imgs[el%7],
+        rate: Math.random() * 5,
         genres: [genres[Math.floor((Math.random() * genres.length))]],
-        overview: 'Loooooooooooooooooong teeeeeeeeeeeeeeeeextttttttttt',
+        overview: 'Test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text test text',
         runtime: '1:35'
     }));
 

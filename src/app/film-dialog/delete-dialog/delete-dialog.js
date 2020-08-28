@@ -3,8 +3,7 @@ import '../../../general/styles/dialog.scss';
 import '../../../general/styles/buttons.scss';
 import PropTypes from "prop-types";
 import Dialog from "../../../general/components/dialog/dialog";
-import {filmType} from "../../films-viewer/content/film-item/film-item";
-
+import {filmType} from "../../util/prop-types/film.type";
 
 DeleteDialog.propTypes = {
     film: filmType,

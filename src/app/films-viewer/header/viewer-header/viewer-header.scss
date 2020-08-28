@@ -1,0 +1,26 @@
+@import "../../../../general/styles/colors.scss";
+
+.TransparentButton {
+  position: absolute;
+  margin: 25px 40px;
+  right: 0;
+}
+
+.SearchContainer {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+
+  .SearchTitle {
+    text-transform: uppercase;
+    font-size: 25px;
+    margin-bottom: 30px;
+    user-select: none;
+    cursor: default;
+  }
+}

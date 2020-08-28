@@ -1,46 +1,35 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './three-dot-menu.scss';
 import MenuPanel, {menuItemType} from '../menu-panel/menu-panel';
 import PropTypes from 'prop-types';
+import {useToggle} from "../../hooks/toggle";
 
 ThreeDotMenu.propTypes = {
     items: PropTypes.arrayOf(menuItemType).isRequired,
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node
-    ]).isRequired,
     onItemSelected: PropTypes.func.isRequired
 }
 
 export default function ThreeDotMenu(props) {
-    const [isMenuOpen, setMenuOpen] = useState(false);
-    const [displayMenuIcon, setDisplayMenuIcon] = useState(false);
+    const [isMenuOpen, setMenuOpen] = useToggle(false);
 
     const onItemSelected = (el) => {
-        setMenuOpen(false);
+        setMenuOpen();
         props.onItemSelected(el);
     }
 
     return (<>
         {
-            displayMenuIcon && !isMenuOpen &&
+            !isMenuOpen &&
             <div className='ThreeDots'
-                onClick={() => setMenuOpen(!isMenuOpen)}>
+                onClick={() => setMenuOpen()}>
             </div>
-        }
-        {
-            props.children &&
-            React.cloneElement(props.children, {onClick: () => setDisplayMenuIcon(!displayMenuIcon)})
         }
         {
             isMenuOpen &&
             <MenuPanel
                 closable={true}
                 items={props.items}
-                onClose={() => {
-                    setMenuOpen(false)
-                    setDisplayMenuIcon(false)
-                }}
+                onClick={() => setMenuOpen()}
                 onItemSelected={onItemSelected}>
             </MenuPanel>
         }

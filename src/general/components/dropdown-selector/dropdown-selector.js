@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import './dropdown-selector.scss';
 import '../../styles/buttons.scss';
 import PropTypes from 'prop-types';
 import Checkbox from "../checkbox/checkbox";
 import Panel from "../panel/panel";
+import {useToggle} from "../../hooks/toggle";
 
 
 DropdownSelector.propTypes = {
@@ -14,48 +15,51 @@ DropdownSelector.propTypes = {
 }
 
 export default function DropdownSelector(props) {
-    const [isOpen, setOpen] = useState(false);
+    const [isOpen, setOpen] = useToggle(false);
 
-    let allItems = props.available.map(el => ({title: el}));
-    if (Array.isArray(props.selected) && props.selected.length) {
-        allItems.forEach(el => {
-                el.checked = props.selected.includes(el.title);
-            }
-        );
-    }
+    let allItems = useMemo(() => {
+        const items = props.available.map(el => ({title: el}));
 
-    const [items] = useState(allItems);
+        if (Array.isArray(props.selected) && props.selected.length) {
+            items.forEach(el => {
+                    el.checked = props.selected.includes(el.title);
+                }
+            );
+        }
+        return items;
+    }, [props.available, props.selected]);
 
-    const getSelectedTitles = () => items.filter(el => el.checked).map(el => el.title);
+    const selectedTitles = useMemo(() =>
+            allItems.filter(el => el.checked).map(el => el.title),
+        [allItems]);
 
-    const calcTitle = (selectedTitles) => {
-        return Array.isArray(selectedTitles) && selectedTitles.length ? selectedTitles.join(', ')
-            : props.defaultTitle;
-    };
-
-    const [title, setTitle] = useState(calcTitle(getSelectedTitles()));
+    const title = useMemo(() =>
+            selectedTitles.length ? selectedTitles.join(', ') : props.defaultTitle,
+        [selectedTitles, props.defaultTitle]);
 
     const onCheck = (el, state) => {
-        el.checked = state;
-        const titles = getSelectedTitles();
-        setTitle(calcTitle(titles));
-        props.onSelect(titles || []);
+        const selected = [...selectedTitles];
+        if (state){
+            selected.push(el.title);
+        } else {
+            selected.splice(selected.indexOf(el.title), 1);
+        }
+        props.onSelect(selected);
     }
     return (
         <>
             <div className="DropdownSelector">
-                {title &&
                 <div
                     tabIndex={0}
                     className='Input FormItemInput DropdownButtonTriangle DropdownSelectorButton'
-                    onKeyDown={event => event.key === "Enter" &&  setOpen(!isOpen)}
-                    onClick={() => setOpen(!isOpen)}>
+                    onKeyDown={event => event.key === "Enter" && setOpen()}
+                    onClick={() => setOpen()}>
                     {title}
-                </div>}
+                </div>
                 {
                     isOpen &&
                     <Panel>
-                        {items.map(el =>
+                        {allItems.map(el =>
                             <Checkbox
                                 key={el.title}
                                 title={el.title}

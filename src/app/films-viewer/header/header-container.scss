@@ -1,0 +1,29 @@
+@import "../../../general/styles/colors.scss";
+
+.HeaderContainer {
+  position: relative;
+  width: 100%;
+
+  .HeaderBackground {
+    filter: blur(2px);
+    padding: 2px;
+    object-fit: none;
+    object-position: top;
+    height: calc(100% - 4px);
+    width: calc(100% - 4px);
+  }
+
+  .HeaderContent {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background: rgba(0, 0, 0, .8);
+  }
+
+  .Logo {
+    position: absolute;
+    margin: 15px 40px;
+    z-index: 1000;
+  }
+}
