@@ -8,6 +8,7 @@ import {useToggle} from "../../hooks/toggle";
 Dropdown.propTypes = {
     items: PropTypes.arrayOf(menuItemType).isRequired,
     selected: menuItemType,
+    hideTriangle: PropTypes.bool,
     onItemSelected: PropTypes.func.isRequired
 }
 
@@ -24,7 +25,7 @@ export default function Dropdown(props) {
     return (
         <div className='DropdownContainer'>
             <div
-                className='DropdownButton DropdownButtonTriangle'
+                className={`DropdownButton ${!props.hideTriangle &&'DropdownButtonTriangle'}`}
                 onClick={() => setOpen()}>
                 {title}
             </div>

@@ -10,39 +10,47 @@ FilmsContent.propTypes = {
     films: PropTypes.arrayOf(filmType),
     searchStr: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.string),
+    activeGenre: PropTypes.string,
+    sortType: PropTypes.string.isRequired,
+    sortOrder: PropTypes.string.isRequired,
     updateActiveFilm: PropTypes.func.isRequired,
+    updateActiveGenre: PropTypes.func.isRequired,
+    updateSortType: PropTypes.func.isRequired,
+    updateSortOrder: PropTypes.func.isRequired,
     onEditFilm: PropTypes.func.isRequired,
     onDeleteFilm: PropTypes.func.isRequired,
 }
 
-const availableSortItems = [
-    {id: 0, title: 'Release Date', filmField: 'releaseDate'},
-    {id: 1, title: 'Title', filmField: 'title'},
-    {id: 2, title: 'Runtime', filmField: 'runtime'},
-];
-
 const SelectAllTabName = 'All';
 
+const availableSortItems = [
+    {id: 0, title: 'Release Date', filmField: 'release_date'},
+    {id: 1, title: 'Title', filmField: 'title'},
+    {id: 2, title: 'Rating', filmField: 'vote_average'},
+];
+
 export default function FilmsContent(props) {
-    const [activeTab, setActiveTab] = useState(SelectAllTabName);
-    const [activeSortItem, setActiveSortItem] = useState(availableSortItems[0]);
+    const [activeTab, setActiveTab] = useState(props.activeGenre || SelectAllTabName);
+    const [activeSortItem, setActiveSortItem] = useState(availableSortItems.find(el => el.filmField === props.sortType));
 
-    let displayedFilms = useMemo(() => {
-        let films = props.films;
-
-        if (props.searchStr) {
-            films = films.filter(el => el.title.includes(props.searchStr));
+    const updateActiveTab = useCallback((tab) => {
+        setActiveTab(tab);
+        if (tab !== SelectAllTabName) {
+            props.updateActiveGenre(tab)
+        } else {
+            props.updateActiveGenre(undefined)
         }
+    }, [props.updateActiveGenre]);
 
-        if (activeTab && activeTab !== SelectAllTabName) {
-            films = films.filter(e => e.genres.includes(activeTab));
-        }
+    const updateActiveSortItem = useCallback((sortBy) => {
+        setActiveSortItem(sortBy);
+        props.updateSortType(sortBy.filmField);
+    }, [props.updateSortType]);
 
-        if (activeSortItem) {
-            films.sort((a, b) => a[activeSortItem.filmField] > b[activeSortItem.filmField] ? 1 : -1)
-        }
-        return films;
-    }, [props.films, props.searchStr, activeTab, activeSortItem]);
+    const updateSortOrder = useCallback(() => {
+        const sortOr = props.sortOrder === 'asc' ? 'desc' : 'asc';
+        props.updateSortOrder(sortOr);
+    }, [props.updateSortOrder]);
 
     let tabs = useMemo(() => [SelectAllTabName, ...props.genres], [props.genres]);
 
@@ -71,33 +79,37 @@ export default function FilmsContent(props) {
             <Tabs
                 tabs={tabs}
                 activeTab={activeTab}
-                onTabClicked={setActiveTab}
+                onTabClicked={updateActiveTab}
                 right={
                     <>
                         <div className='SortLabel'>Sort by</div>
                         <Dropdown
+                            hideTriangle={true}
                             selected={activeSortItem}
                             items={availableSortItems}
-                            onItemSelected={setActiveSortItem}
+                            onItemSelected={updateActiveSortItem}
                         />
+                        <div onClick={updateSortOrder}
+                            className={`SortButton ${props.sortOrder === 'asc' ? 'AscSorting' : 'DscSorting'}`}>
+                        </div>
                     </>
                 }>
                 {
                     <div className='ContentContainer'>
                         <div className='FilmsCountContainer'>
-                            <span className='FilmsCount'>{displayedFilms.length}</span> movies found
+                            <span className='FilmsCount'>{props.films.length}</span> movies found
                         </div>
                         {
-                            displayedFilms.length
+                            props.films.length
                                 ?
                                 <div className='FilmContainer'>
                                     {
-                                        displayedFilms.map(el =>
+                                        props.films.map(el =>
                                             <FilmItem
                                                 key={el.id}
                                                 film={el}
                                                 actions={actions}
-                                                clickHandler={()=>updateActiveFilm(el)}/>)
+                                                clickHandler={() => updateActiveFilm(el)}/>)
                                     }
                                 </div>
                                 :

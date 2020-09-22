@@ -7,7 +7,7 @@
   .HeaderBackground {
     filter: blur(2px);
     padding: 2px;
-    object-fit: none;
+    object-fit: cover;
     object-position: top;
     height: calc(100% - 4px);
     width: calc(100% - 4px);

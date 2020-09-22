@@ -13,8 +13,8 @@ FilmDetailsHeader.propTypes = {
 
 export default function FilmDetailsHeader(props) {
     const getRateColor = () => {
-        if (props.film.rate >= 4) return 'Good';
-        if (props.film.rate >= 3) return 'Normal';
+        if (props.film.vote_average >= 7) return 'Good';
+        if (props.film.vote_average >= 4) return 'Normal';
         return 'Bad';
     }
     return (
@@ -24,17 +24,18 @@ export default function FilmDetailsHeader(props) {
             </div>
             <div className='FilmDetailsContainer'>
                 <img className='FilmDetailsImage'
-                    src={props.film.image || noImage}
+                    src={props.film.poster_path || noImage}
+                    onError={(e)=>{e.target.onerror = null; e.target.src=noImage}}
                     alt='film-logo'/>
                 <div className="FilmDetails">
                     <div className='FilmTitleContainer'>
                         <div className="FilmTitle">{props.film.title}</div>
-                        <div className={"FilmRate " + getRateColor()}>{props.film.rate.toFixed(1)}</div>
+                        <div className={"FilmRate " + getRateColor()}>{props.film.vote_average.toFixed(1)}</div>
                     </div>
                     <div className='FilmGenres'>{Array.isArray(props.film.genres) ? props.film.genres.join(', ') : ''}</div>
                     <div className="FilmData">
-                        <div className="FilmReleaseDate">{props.film.releaseDate}</div>
-                        <div className="FilmRuntime">{props.film.runtime} min</div>
+                        <div className="FilmReleaseDate">{(new Date(props.film.release_date)).getFullYear()}</div>
+                        <div className="FilmRuntime">{props.film.runtime && props.film.runtime + ' min'}</div>
                     </div>
                     <div className="FilmOverview">{props.film.overview}</div>
                 </div>

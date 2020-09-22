@@ -18,11 +18,11 @@ const filmFormItems = [{
 }, {
     label: 'Release Date',
     type: 'Date',
-    filmField: 'releaseDate'
+    filmField: 'release_date'
 }, {
     label: 'Movie url',
     type: 'Text',
-    filmField: 'url'
+    filmField: 'poster_path'
 }, {
     label: 'Genre',
     type: 'Dropdown',
@@ -47,13 +47,13 @@ AddEditFilmDialog.propTypes = {
 
 export default function AddEditFilmDialog(props) {
     const isEditMode = !!props.film;
-    const [formItems, setFormItems] = useState([...filmFormItems]);
+    const [formItems, setFormItems] = useState([]);
 
     useEffect(() => {
-        let items = [...filmFormItems];
+        let items = filmFormItems.map(el => ({...el}));
         items.find(el => el.filmField === 'genres').available = props.genres || [];
-        if (isEditMode) {
-            items = formItems.filter(el => !el.showOnlyOnEdit).map(el => ({...el}));
+        if (!isEditMode) {
+            items = items.filter(el => !el.showOnlyOnEdit);
         }
         setFormItems(items);
     }, [props.genres, props.film]);
@@ -76,10 +76,11 @@ export default function AddEditFilmDialog(props) {
             setFormState({...formState, [fieldName]: value});
 
     const save = () => {
-        const newFilm = {};
+        const newFilm = { ...props.film };
         filmFormItems.forEach(el => {
             newFilm[el.filmField] = formState[el.filmField]
         });
+        newFilm.runtime = +newFilm.runtime;
         props.onSave(newFilm);
     }
 

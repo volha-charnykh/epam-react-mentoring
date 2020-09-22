@@ -8,11 +8,14 @@
   border-bottom: 2px solid $dark-grey;
   text-transform: uppercase;
   padding: 15px 0;
+  white-space: nowrap;
 
   .Tabs {
     display: flex;
     flex-direction: row;
+    max-width: 850px;
     justify-content: flex-end;
+    position: relative;
 
     .Tab {
       margin: 0 20px -17px 0;
@@ -30,7 +33,7 @@
     flex-direction: row;
     justify-content: flex-end;
 
-    >* {
+    > * {
       margin-left: 10px;
     }
   }
@@ -38,4 +41,27 @@
 
 .TabsContent {
 
+}
+
+.arrow {
+  padding: 3px;
+  z-index: 2;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 3px;
+  user-select: none;
+  cursor: pointer;
+}
+
+#leftArr {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  margin-right: 10px;
+}
+
+#rightArr {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
 }

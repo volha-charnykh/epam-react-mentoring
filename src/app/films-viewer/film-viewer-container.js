@@ -1,31 +1,27 @@
-import React, {Suspense, useCallback, useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import FilmViewer from "./films-viewer";
-import {allFilms, genres as allGenres} from "../mockData/films-data";
 import Loading from "../../general/components/loading/loading";
 import {usePrevState} from "../../general/hooks/prev-state";
+import {connect} from "react-redux";
+import {addFilm, loadFilms, updateFilm, deleteFilm} from "../store/actions/films";
 
 const AddEditFilmDialog = React.lazy(() => import("../film-dialog/add-edit-dialog/add-edit-film-dialog"));
 const DeleteDialog = React.lazy(() => import("../film-dialog/delete-dialog/delete-dialog"));
 
 
-export default function FilmViewerContainer() {
+function FilmViewerContainer(props) {
     const [isAddEditDialogOpen, setAddEditDialogOpen, wasAddEditDialogOpen] = usePrevState(false);
     const [isDeleteDialogOpen, setDeleteDialogOpen, wasDeleteDialogOpen] = usePrevState(false);
     const [selectedFilm, setSelectedFilm] = useState(null);
-    const [genres, setGenres] = useState([]);
-    const [films, setFilms] = useState([]);
 
     useEffect(() => {
-        // data loading
-        setTimeout(() => setGenres([...allGenres]), 2000);
-        setTimeout(() =>  setFilms([...allFilms]), 2000);
+        props.loadFilms(props.filmViewer);
     }, []);
 
     useEffect(() => {
         if ((wasAddEditDialogOpen && !isAddEditDialogOpen) ||
             (wasDeleteDialogOpen && !isDeleteDialogOpen)) {
-            // data loading
-            setTimeout(() =>  setFilms([...allFilms]), 2000);
+            props.loadFilms(props.filmViewer);
         }
     }, [isAddEditDialogOpen, isDeleteDialogOpen]);
 
@@ -33,19 +29,18 @@ export default function FilmViewerContainer() {
     const saveFilm = (film) => {
         if (selectedFilm) {
             setSelectedFilm(null);
-            allFilms.splice(allFilms.findIndex(item => item.id === film.id), 1, film);
+            props.updateFilm(film);
         } else {
-            allFilms.push({
-                ...film,
-                id: allFilms.reduce((acc, cur) => acc < cur.id ? cur.id : acc, 0) + 1
-            })
+            props.addFilm(film);
         }
+        props.loadFilms();
         setAddEditDialogOpen(false);
     }
 
     const deleteFilm = (film) => {
         setSelectedFilm(null);
-        allFilms.splice(allFilms.findIndex(item => item.id === film.id), 1);
+        props.deleteFilm(film);
+        props.loadFilms(props.filmViewer);
         setDeleteDialogOpen(false);
     }
 
@@ -67,8 +62,8 @@ export default function FilmViewerContainer() {
     return (
         <>
             <FilmViewer
-                films={films}
-                genres={genres}
+                films={props.films}
+                genres={props.genres}
                 onAddFilm={onAddFilm}
                 onEditFilm={onEditFilm}
                 onDeleteFilm={onDeleteFilm}
@@ -78,7 +73,7 @@ export default function FilmViewerContainer() {
                 <Suspense fallback={<Loading/>}>
                     <AddEditFilmDialog
                         film={selectedFilm}
-                        genres={genres}
+                        genres={props.genres}
                         onSave={saveFilm}
                         onClose={() => setAddEditDialogOpen(false)}/>
                 </Suspense>
@@ -95,3 +90,20 @@ export default function FilmViewerContainer() {
         </>
     );
 }
+
+function mapStateToProps(state) {
+    const {films, genres, filmViewer} = state;
+
+    return {films, filmViewer, genres};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        loadFilms: params => dispatch(loadFilms(params)),
+        addFilm: film => dispatch(addFilm(film)),
+        updateFilm: film => dispatch(updateFilm(film)),
+        deleteFilm: film => dispatch(deleteFilm(film))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilmViewerContainer);
