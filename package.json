@@ -9,6 +9,7 @@
     "test": "jest --passWithNoTests"
   },
   "dependencies": {
+    "formik": "^2.1.5",
     "jest": "^26.2.2",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
@@ -19,7 +20,8 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "sass-loader": "^9.0.3",
-    "webpack": "^4.44.1"
+    "webpack": "^4.44.1",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",

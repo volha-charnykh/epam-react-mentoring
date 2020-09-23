@@ -9,7 +9,7 @@ import {useToggle} from "../../hooks/toggle";
 
 DropdownSelector.propTypes = {
     defaultTitle: PropTypes.string,
-    selected: PropTypes.arrayOf(PropTypes.string),
+    value: PropTypes.arrayOf(PropTypes.string),
     available: PropTypes.arrayOf(PropTypes.string).isRequired,
     onSelect: PropTypes.func.isRequired
 }
@@ -20,14 +20,14 @@ export default function DropdownSelector(props) {
     let allItems = useMemo(() => {
         const items = props.available.map(el => ({title: el}));
 
-        if (Array.isArray(props.selected) && props.selected.length) {
+        if (Array.isArray(props.value) && props.value.length) {
             items.forEach(el => {
-                    el.checked = props.selected.includes(el.title);
+                    el.checked = props.value.includes(el.title);
                 }
             );
         }
         return items;
-    }, [props.available, props.selected]);
+    }, [props.available, props.value]);
 
     const selectedTitles = useMemo(() =>
             allItems.filter(el => el.checked).map(el => el.title),
@@ -51,7 +51,7 @@ export default function DropdownSelector(props) {
             <div className="DropdownSelector">
                 <div
                     tabIndex={0}
-                    className='Input FormItemInput DropdownButtonTriangle DropdownSelectorButton'
+                    className={`Input FormItemInput DropdownButtonTriangle DropdownSelectorButton ${props.markInvalid ? 'Invalid' : ''}`}
                     onKeyDown={event => event.key === "Enter" && setOpen()}
                     onClick={() => setOpen()}>
                     {title}

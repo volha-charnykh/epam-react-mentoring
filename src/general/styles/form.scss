@@ -16,6 +16,10 @@
   &:focus, &:hover {
     opacity: 1;
   }
+
+  &.Invalid {
+    border: solid 1px $red;
+  }
 }
 
 .DarkInput {
@@ -27,4 +31,34 @@
     outline: none;
     background-color: $black;
   }
+}
+
+.FormItemLabel {
+  text-transform: uppercase;
+  color: $red;
+  margin-top: 30px;
+  display: block;
+  user-select: none;
+  cursor: default;
+  width: 100%;
+
+  .NotEditableFormItem {
+    margin-top: 5px;
+    font-size: 14px;
+    color: $white;
+  }
+
+  .FormItemInput {
+    margin-top: 5px;
+
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+  }
+}
+
+.InputError {
+  margin-top: 3px;
+  color: $red;
+  font-size: 11px;
 }

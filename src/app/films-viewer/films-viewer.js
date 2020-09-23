@@ -60,8 +60,6 @@ function FilmViewer(props) {
 }
 
 function mapStateToProps(state) {
-
-    console.log(state);
     const {films, filmViewer, genres} = state;
 
     return {films, filmViewer, genres};

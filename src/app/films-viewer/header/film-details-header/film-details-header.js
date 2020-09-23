@@ -30,7 +30,7 @@ export default function FilmDetailsHeader(props) {
                 <div className="FilmDetails">
                     <div className='FilmTitleContainer'>
                         <div className="FilmTitle">{props.film.title}</div>
-                        <div className={"FilmRate " + getRateColor()}>{props.film.vote_average.toFixed(1)}</div>
+                        <div className={"FilmRate " + getRateColor()}>{props.film.vote_average?.toFixed(1) || 0}</div>
                     </div>
                     <div className='FilmGenres'>{Array.isArray(props.film.genres) ? props.film.genres.join(', ') : ''}</div>
                     <div className="FilmData">

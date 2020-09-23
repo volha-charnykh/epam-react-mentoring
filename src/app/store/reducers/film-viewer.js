@@ -1,7 +1,6 @@
 import {ACTIONS} from '../actions';
 
 export function filmViewer(state = { sortType: 'release_date', sortOrder: 'desc' }, action) {
-    console.log(state);
     switch (action.type) {
         case ACTIONS.SET_SEARCH_STRING:
             return {...state, searchString: action.payload};

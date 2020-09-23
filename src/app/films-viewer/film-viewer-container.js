@@ -5,14 +5,16 @@ import {usePrevState} from "../../general/hooks/prev-state";
 import {connect} from "react-redux";
 import {addFilm, loadFilms, updateFilm, deleteFilm} from "../store/actions/films";
 
-const AddEditFilmDialog = React.lazy(() => import("../film-dialog/add-edit-dialog/add-edit-film-dialog"));
-const DeleteDialog = React.lazy(() => import("../film-dialog/delete-dialog/delete-dialog"));
+const AddEditFilmDialog = React.lazy(() => import("./add-edit-dialog/add-edit-film-dialog"));
+const DeleteDialog = React.lazy(() => import("../../general/components/confirmation-dialog/confirmation-dialog"));
+const ResultPopup = React.lazy(() => import("../../general/components/result-popup/result-popup"));
 
 
 function FilmViewerContainer(props) {
     const [isAddEditDialogOpen, setAddEditDialogOpen, wasAddEditDialogOpen] = usePrevState(false);
-    const [isDeleteDialogOpen, setDeleteDialogOpen, wasDeleteDialogOpen] = usePrevState(false);
+    const [deleteDialog, setDeleteDialog, wasDeleteDialog] = usePrevState(null);
     const [selectedFilm, setSelectedFilm] = useState(null);
+    const [resultPopup, setResultPopup] = useState(null);
 
     useEffect(() => {
         props.loadFilms(props.filmViewer);
@@ -20,10 +22,10 @@ function FilmViewerContainer(props) {
 
     useEffect(() => {
         if ((wasAddEditDialogOpen && !isAddEditDialogOpen) ||
-            (wasDeleteDialogOpen && !isDeleteDialogOpen)) {
+            (wasDeleteDialog && !deleteDialog)) {
             props.loadFilms(props.filmViewer);
         }
-    }, [isAddEditDialogOpen, isDeleteDialogOpen]);
+    }, [isAddEditDialogOpen, deleteDialog]);
 
 
     const saveFilm = (film) => {
@@ -35,13 +37,24 @@ function FilmViewerContainer(props) {
         }
         props.loadFilms();
         setAddEditDialogOpen(false);
+        setResultPopup({
+            title: 'Congratulations!',
+            description: `The movie has been ${!!selectedFilm ? 'edited' : 'added'} successfully`,
+            type: 'Success'
+        });
+        setSelectedFilm(null);
     }
 
-    const deleteFilm = (film) => {
-        setSelectedFilm(null);
-        props.deleteFilm(film);
+    const deleteFilm = () => {
+        props.deleteFilm(selectedFilm);
+        setResultPopup({
+            title: 'Congratulations!',
+            description: `The movie has been deleted successfully`,
+            type: 'Success'
+        });
         props.loadFilms(props.filmViewer);
-        setDeleteDialogOpen(false);
+        setSelectedFilm(null);
+        setDeleteDialog(null);
     }
 
     const onAddFilm = () => {
@@ -56,7 +69,10 @@ function FilmViewerContainer(props) {
 
     const onDeleteFilm = (film) => {
         setSelectedFilm(film);
-        setDeleteDialogOpen(true);
+        setDeleteDialog({
+            title: 'Delete Movie',
+            description: 'Are you sure you want to delete this movie?'
+        });
     }
 
     return (
@@ -79,12 +95,23 @@ function FilmViewerContainer(props) {
                 </Suspense>
             }
             {
-                isDeleteDialogOpen &&
+                !!resultPopup &&
+                <Suspense fallback={<Loading/>}>
+                    <ResultPopup
+                        title={resultPopup.title}
+                        description={resultPopup.description}
+                        type={resultPopup.type}
+                        onClose={() => setResultPopup(null)}/>
+                </Suspense>
+            }
+            {
+                !!deleteDialog &&
                 <Suspense fallback={<Loading/>}>
                     <DeleteDialog
-                        film={selectedFilm}
-                        onDelete={deleteFilm}
-                        onClose={() => setDeleteDialogOpen(false)}/>
+                        title={deleteDialog.title}
+                        description={deleteDialog.description}
+                        onConfirm={deleteFilm}
+                        onClose={() => setDeleteDialog(null)}/>
                 </Suspense>
             }
         </>
