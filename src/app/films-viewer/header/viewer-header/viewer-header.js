@@ -12,7 +12,7 @@ ViewerHeader.propTypes = {
 
 export default function ViewerHeader(props) {
     return (
-        <HeaderContainer height='300px'>
+        <>
             <div className='TransparentButton HeaderRightCorner'
                 onClick={() => props.onAddFilm()}>+ ADD MOVIE
             </div>
@@ -20,6 +20,6 @@ export default function ViewerHeader(props) {
                 <span className='SearchTitle'>Find your movie</span>
                 <SearchBox search={props.updateSearchStr}/>
             </div>
-        </HeaderContainer>
+        </>
     );
 }

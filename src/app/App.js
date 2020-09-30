@@ -5,7 +5,7 @@ import Loading from "../general/components/loading/loading";
 import { Provider } from 'react-redux';
 import store from "./store";
 
-const FilmViewerContainer = React.lazy(() => import("./films-viewer/film-viewer-container"));
+const FilmViewer = React.lazy(() => import("./films-viewer/films-viewer"));
 
 export default function App() {
     return (
@@ -13,7 +13,7 @@ export default function App() {
             <AppErrorBoundary>
                 <Provider store={store}>
                     <Suspense fallback={<Loading/>}>
-                        <FilmViewerContainer/>
+                        <FilmViewer/>
                     </Suspense>
                 </Provider>
             </AppErrorBoundary>

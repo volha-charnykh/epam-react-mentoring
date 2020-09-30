@@ -18,7 +18,7 @@ export default function FilmDetailsHeader(props) {
         return 'Bad';
     }
     return (
-        <HeaderContainer>
+        <>
             <div className='FilmDetailsBack'
                 onClick={() => props.onGoBack()}>Back
             </div>
@@ -40,6 +40,6 @@ export default function FilmDetailsHeader(props) {
                     <div className="FilmOverview">{props.film.overview}</div>
                 </div>
             </div>
-        </HeaderContainer>
+            </>
     );
 }
