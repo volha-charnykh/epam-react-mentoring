@@ -1,6 +1,6 @@
-import {deleteFilm, loadFilms, setConfirmationDialog, setResultPopup, setSelectedFilm} from "../../store/slices";
-import ConfirmationDialog from "../../../general/components/confirmation-dialog/confirmation-dialog";
-import {selectDialogs, selectSelectedFilm} from "../../store/selectors";
+import {deleteFilm, loadFilms, setConfirmationDialog, setResultPopup, setSelectedFilm} from "../../../store/slices";
+import ConfirmationDialog from "../../../../general/components/confirmation-dialog/confirmation-dialog";
+import {selectDialogs, selectSelectedFilm} from "../../../store/selectors";
 import {useDispatch, useSelector} from "react-redux";
 import React from "react";
 
@@ -17,7 +17,8 @@ export default function DeleteDialog() {
                     description: `The movie has been deleted successfully`,
                     type: 'Success'
                 }));
-                dispatch(loadFilms());
+                dispatch(loadFilms((dispatch, films) => films && films.length > 0 ?
+                    history.push('/films') : history.push('/no-films')));
                 dispatch(setSelectedFilm(null));
                 dispatch(setConfirmationDialog(null));
             },

@@ -1,12 +1,21 @@
 @import "../../general/styles/colors.scss";
 
 .ErrorPage {
-  margin-left: auto;
-  margin-right: auto;
   height: 50vh;
-  width: 935px;
-  text-align: center;
-  line-height: 45vh;
-  font-size: 30px;
   background-color: $black;
+  position: relative;
+
+  .Logo {
+    position: absolute;
+    margin: 15px 30px;
+    z-index: 1000;
+  }
+
+  .ErrorPageTitle{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    line-height: 45vh;
+    font-size: 30px;
+  }
 }

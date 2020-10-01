@@ -1,10 +1,10 @@
 import React from 'react';
-import '../../../../general/styles/dialog.scss';
-import '../../../../general/styles/buttons.scss';
-import '../../../../general/styles/form.scss';
-import Dialog from "../../../../general/components/dialog/dialog";
+import '../../../../../general/styles/dialog.scss';
+import '../../../../../general/styles/buttons.scss';
+import '../../../../../general/styles/form.scss';
+import Dialog from "../../../../../general/components/dialog/dialog";
 import {useDispatch, useSelector} from "react-redux";
-import {selectGenres, selectSelectedFilm} from "../../../store/selectors";
+import {selectGenres, selectSelectedFilm} from "../../../../store/selectors";
 import {
     addFilm,
     loadFilms,
@@ -12,7 +12,7 @@ import {
     setResultPopup,
     setSelectedFilm,
     updateFilm
-} from "../../../store/slices";
+} from "../../../../store/slices";
 import AddEditFilmForm from "./add-edit-film-form";
 
 
@@ -23,7 +23,8 @@ export default function AddEditFilmDialog() {
 
     const saveFilm = (f) => {
         const onSuccess = (dispatch) => {
-            dispatch(loadFilms());
+            dispatch(loadFilms((dispatch, films) => films && films.length > 0 ?
+                history.push('/films') : history.push('/no-films')));
             dispatch(setAddEditDialogOpen(false));
             dispatch(setResultPopup({
                 title: 'Congratulations!',

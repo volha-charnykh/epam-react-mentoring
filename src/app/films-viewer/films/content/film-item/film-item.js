@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import './film-item.scss';
-import ThreeDotMenu from '../../../../general/components/three-dot-menu/three-dot-menu';
-import noImage from '../../../../img/no-image.jpg';
-import {filmType} from "../../../util/prop-types/film.type";
+import ThreeDotMenu from '../../../../../general/components/three-dot-menu/three-dot-menu';
+import noImage from '../../../../../img/no-image.jpg';
+import {filmType} from "../../../../util/prop-types/film.type";
 
 
 FilmItem.propTypes = {

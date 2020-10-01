@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './search-box.scss';
 import '../../styles/buttons.scss';
 import '../../styles/form.scss';
 import PropTypes from 'prop-types';
 
 SearchBox.propTypes = {
+    searchString: PropTypes.string,
     searchButtonLabel: PropTypes.string,
     search: PropTypes.func.isRequired
 }
 
 export default function SearchBox(props) {
-    let text = '';
+    let [text, setText] = useState(props.searchString || '');
+
     const search = () => {
         props.search(text);
     }
@@ -19,9 +21,10 @@ export default function SearchBox(props) {
             <input
                 name="search"
                 className='DarkInput'
+                value={text}
                 placeholder='What do you want to watch?'
                 onKeyDown={event => event.key === "Enter" && search()}
-                onChange={(event) => text = event.target.value}/>
+                onChange={(event) => setText(event.target.value)}/>
             <div className='PrimaryButton' onClick={search}>
                 {props.searchButtonLabel || 'Search'}
             </div>

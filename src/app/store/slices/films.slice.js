@@ -20,7 +20,8 @@ export const loadFilms = (onSuccess = () => {}, onError = () => {}) =>
         FilmApi.loadFilms(selectSearchParams(getState()))
         .then(result => {
             dispatch(setFilms(result));
-            dispatch(setGenres(result))
+            dispatch(setGenres(result));
+            return result;
         })
         .then(d => onSuccess(dispatch, d))
         .catch(err => onError(dispatch, err));

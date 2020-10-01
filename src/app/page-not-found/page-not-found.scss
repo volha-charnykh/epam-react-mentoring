@@ -1,0 +1,32 @@
+@import "../../general/styles/colors.scss";
+
+.PageNotFound {
+  height: 70vh;
+  background-color: $black;
+  padding: 10px 35px 0;
+
+  .Logo {
+    position: absolute;
+    margin: 15px 30px;
+    z-index: 1000;
+  }
+
+  .PageNotFoundContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15vh;
+    height: 30vh;
+
+    .PageNotFoundTitle {
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .PageNotFoundImage {
+      max-width: 100%;
+      margin: 50px 0;
+    }
+  }
+}

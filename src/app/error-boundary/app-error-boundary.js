@@ -1,5 +1,8 @@
 import React from 'react';
 import './app-error-boundary.scss';
+import Layout from "../../general/components/layout/layout";
+import Footer from "../footer/footer";
+import Logo from "../../general/components/logo/logo";
 
 export default class AppErrorBoundary extends React.Component {
     constructor(props) {
@@ -17,7 +20,16 @@ export default class AppErrorBoundary extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return <div className="ErrorPage">Something went wrong.</div>;
+            return (
+            <Layout
+                footer={
+                    <Footer/>
+                }>
+                <div className="ErrorPage">
+                    <Logo/>
+                    <div className="ErrorPageTitle">Something went wrong.</div>
+                </div>
+            </Layout>);
         }
 
         return this.props.children;

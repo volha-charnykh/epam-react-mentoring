@@ -1,13 +1,13 @@
 import React from 'react';
-import '../../../../general/styles/dialog.scss';
-import '../../../../general/styles/buttons.scss';
-import '../../../../general/styles/form.scss';
+import '../../../../../general/styles/dialog.scss';
+import '../../../../../general/styles/buttons.scss';
+import '../../../../../general/styles/form.scss';
 import PropTypes from "prop-types";
-import {filmType} from "../../../util/prop-types/film.type";
+import {filmType} from "../../../../util/prop-types/film.type";
 import * as Yup from 'yup';
 import {Field, Form, withFormik} from "formik";
-import DropdownSelector from "../../../../general/components/dropdown-selector/dropdown-selector";
-import FormItem from "../../../../general/components/form-item/form-item";
+import DropdownSelector from "../../../../../general/components/dropdown-selector/dropdown-selector";
+import FormItem from "../../../../../general/components/form-item/form-item";
 
 const FilmSchema = Yup.object().shape({
     id: Yup.string(),

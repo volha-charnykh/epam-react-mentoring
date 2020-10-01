@@ -1,0 +1,21 @@
+.ContentContainer {
+  padding: 25px 0;
+
+  .FilmsCountContainer {
+    width: 100%;
+    padding-bottom: 25px;
+    font-size: 15px;
+    user-select: none;
+    cursor: default;
+
+    .FilmsCount {
+      font-weight: 600;
+    }
+  }
+
+  .FilmList {
+    display: grid;
+    grid-gap: 5px 50px;
+    grid-template-columns: repeat(auto-fit, 220px);
+  }
+}
