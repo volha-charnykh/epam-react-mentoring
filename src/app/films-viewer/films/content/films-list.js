@@ -1,16 +1,37 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './films-list.scss';
 import FilmItem from './film-item/film-item';
 import {useDispatch, useSelector} from "react-redux";
 import {selectFilms} from "../../../store/selectors";
-import {setAddEditDialogOpen, setConfirmationDialog, setFilmDetails, setSelectedFilm} from "../../../store/slices";
-import {useHistory} from "react-router-dom";
+import {
+    setActiveGenre,
+    setAddEditDialogOpen,
+    setConfirmationDialog,
+    setFilmDetails, setSearchString,
+    setSelectedFilm
+} from "../../../store/slices";
+import {useHistory, useLocation} from "react-router-dom";
 
 
 export default function FilmsList() {
     const films = useSelector(selectFilms);
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
+    const genre = query.get("genre");
+    const title = query.get("title");
+
+    useEffect(() => {
+        dispatch(setActiveGenre(genre));
+        dispatch(setSearchString(title));
+    }, [genre, title]);
+
+    useEffect(() => {
+        if (!films.length) {
+            history.push('/no-films' + location.search);
+        }
+    }, [films.length]);
 
     const actions = [
         {
@@ -54,8 +75,6 @@ export default function FilmsList() {
                             actions={actions}
                             clickHandler={() => {
                                 updateActiveFilm(el);
-                                console.log(history.location.pathname + '/film/'+el.id);
-                                history.push(history.location.pathname + '/film/'+el.id);
                             }}/>)
                 }
             </div>

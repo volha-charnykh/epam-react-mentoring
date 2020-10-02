@@ -1,19 +1,17 @@
-import Logo from '../../../general/components/logo/logo';
 import React from 'react';
-import './header-container.scss';
 import '../../../general/styles/buttons.scss';
-import img from '../../../img/background-movies.jpg';
 import {useDispatch, useSelector} from "react-redux";
 import {selectFilmDetails} from "../../store/selectors/film-details.selector";
 import {setAddEditDialogOpen, setFilmDetails, setSearchString} from "../../store/slices";
 import {useHistory, useLocation} from "react-router-dom";
 import {selectSearchParams} from "../../store/selectors";
+import HeaderContainer from "../../header/header-container";
 
 
 const ViewerHeader = React.lazy(() => import("./viewer-header/viewer-header"));
 const FilmDetailsHeader = React.lazy(() => import("./film-details-header/film-details-header"));
 
-export default function HeaderContainer() {
+export default function FilmsHeaderContainer() {
     const filmDetails = useSelector(selectFilmDetails);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -21,15 +19,19 @@ export default function HeaderContainer() {
     const genre = query.get("genre");
     const searchParams = useSelector(selectSearchParams);
 
+    const updateSearchStr = str => {
+        if(str) {
+            dispatch(setSearchString(str));
+            history.push(`/films?title=${str}${genre ? '&genre=' + genre : ''}`);
+        } else {
+            dispatch(setSearchString(null));
+            history.push(`/films${genre ? '?genre=' + genre : ''}`);
+        }
+    }
+
     return (
-        <div className='HeaderContainer' style={{height: (!filmDetails ? '300px' : '100%')}}>
-            <img
-                src={img}
-                alt='header'
-                className='HeaderBackground'/>
-            <div className='HeaderContent'>
-                <Logo/>
-                {
+        <HeaderContainer height={!filmDetails ? '300px' : '100%'}>
+            {
                     !!filmDetails ?
                         <FilmDetailsHeader
                             film={filmDetails}
@@ -40,13 +42,9 @@ export default function HeaderContainer() {
                         :
                         <ViewerHeader
                             searchString={searchParams.searchString}
-                            updateSearchStr={str => {
-                                dispatch(setSearchString(str))
-                                history.push(`/search?title=${str}${genre ? '&genre=' + genre:''}`);
-                            }}
+                            updateSearchStr={updateSearchStr}
                             onAddFilm={() => dispatch(setAddEditDialogOpen(true))}/>
                 }
-            </div>
-        </div>
+        </HeaderContainer>
     );
 }

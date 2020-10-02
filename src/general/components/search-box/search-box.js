@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './search-box.scss';
 import '../../styles/buttons.scss';
 import '../../styles/form.scss';
@@ -12,6 +12,8 @@ SearchBox.propTypes = {
 
 export default function SearchBox(props) {
     let [text, setText] = useState(props.searchString || '');
+
+    useEffect(() => setText(props.searchString || ''), [props.searchString]);
 
     const search = () => {
         props.search(text);

@@ -2,7 +2,6 @@ import React from 'react';
 import './film-details-header.scss';
 import PropTypes from 'prop-types';
 import '../../../../general/styles/buttons.scss';
-import HeaderContainer from "../header-container";
 import {filmType} from "../../../util/prop-types/film.type";
 import noImage from "../../../../img/no-image.jpg";
 

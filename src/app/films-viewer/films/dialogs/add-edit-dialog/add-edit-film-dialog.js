@@ -23,8 +23,7 @@ export default function AddEditFilmDialog() {
 
     const saveFilm = (f) => {
         const onSuccess = (dispatch) => {
-            dispatch(loadFilms((dispatch, films) => films && films.length > 0 ?
-                history.push('/films') : history.push('/no-films')));
+            dispatch(loadFilms());
             dispatch(setAddEditDialogOpen(false));
             dispatch(setResultPopup({
                 title: 'Congratulations!',

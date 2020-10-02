@@ -10,6 +10,7 @@ const FilmsViewer = React.lazy(() => import("./films-viewer/films-viewer"));
 const Films = React.lazy(() => import("./films-viewer/films/films"));
 const PageNotFound = React.lazy(() => import("./page-not-found/page-not-found"));
 const NoFilms = React.lazy(() => import("./films-viewer/no-films/no-films"));
+const Home = React.lazy(() => import("./home/home"));
 
 export default function App() {
     return (
@@ -21,14 +22,19 @@ export default function App() {
                             <Route exact
                                 path="/"
                                 render={() => (
-                                    <Redirect to="/no-films"/>
+                                    <Redirect to="/home"/>
                                 )}/>
+                            <Route exact  path="/home">
+                                <Suspense fallback={<Loading/>}>
+                                    <Home/>
+                                </Suspense>
+                            </Route>
                             <Route exact  path="/no-films">
                                 <Suspense fallback={<Loading/>}>
                                     <FilmsViewer><NoFilms/></FilmsViewer>
                                 </Suspense>
                             </Route>
-                            <Route exact path="/search">
+                            <Route exact path="/films">
                                 <Suspense fallback={<Loading/>}>
                                     <FilmsViewer><Films/></FilmsViewer>
                                 </Suspense>

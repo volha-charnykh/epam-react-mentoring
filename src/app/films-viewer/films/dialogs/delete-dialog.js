@@ -17,8 +17,7 @@ export default function DeleteDialog() {
                     description: `The movie has been deleted successfully`,
                     type: 'Success'
                 }));
-                dispatch(loadFilms((dispatch, films) => films && films.length > 0 ?
-                    history.push('/films') : history.push('/no-films')));
+                dispatch(loadFilms());
                 dispatch(setSelectedFilm(null));
                 dispatch(setConfirmationDialog(null));
             },

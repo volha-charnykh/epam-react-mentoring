@@ -1,14 +1,14 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import Footer from '../footer/footer';
 import Layout from '../../general/components/layout/layout';
 import './films-viewer.scss';
-import HeaderContainer from "./header/header-container";
 import Tabs from "../../general/components/tabs/tabs";
 import Dropdown from "../../general/components/dropdown/dropdown";
-import {loadFilms, setActiveGenre, setSearchString, setSortOrder, setSortType} from "../store/slices";
+import {setSortOrder, setSortType} from "../store/slices";
 import {useDispatch, useSelector} from "react-redux";
-import {selectFilms, selectGenres, selectSearchParams} from "../store/selectors";
+import {selectGenres, selectSearchParams} from "../store/selectors";
 import {useHistory, useLocation} from "react-router-dom";
+import FilmsHeaderContainer from "./header/films-header-container";
 
 const SelectAllTabName = 'All';
 
@@ -21,37 +21,26 @@ const availableSortItems = [
 export default function FilmsViewer(props) {
     const searchParams = useSelector(selectSearchParams);
     const genres = useSelector(selectGenres);
-    const films = useSelector(selectFilms);
     const dispatch = useDispatch();
+    const location = useLocation();
 
     let activeTab = useMemo(() => searchParams.activeGenre || SelectAllTabName, [searchParams.activeGenre]);
     let activeSortItem = useMemo(() => availableSortItems.find(el => el.filmField === searchParams.sortType), [searchParams.sortType]);
     let tabs = useMemo(() => [SelectAllTabName, ...genres], [genres]);
 
     const history = useHistory();
-    const query = new URLSearchParams(useLocation().search);
-    const genre = query.get("genre");
-    const title = query.get("title");
-
-    useEffect(() => {
-        dispatch(loadFilms(/*(dispatch, films) => films && films.length > 0 ?
-                history.push('/films') : history.push('/no-films')*/));
-    }, []);
-
-    useEffect(() => {
-        dispatch(setActiveGenre(genre));
-        dispatch(setSearchString(title));
-        if ((!genre && !title) || !films || !films.length) {
-            history.push('/no-films');
-        }
-    }, [genre, title]);
 
     const updateActiveTab = (tab) => {
+        const search = new URLSearchParams(location.search);
         if (tab !== SelectAllTabName) {
-            history.push(`/search?genre=${tab}${title ? '&title=' + title : ''}`);
+            search.set("genre", tab);
         } else {
-            history.push('/no-films');
+            search.delete("genre");
         }
+        history.push({
+            pathname: location.pathname,
+            search: "?" + search.toString()
+        });
     };
 
     const updateSortOrder = () => {
@@ -63,7 +52,7 @@ export default function FilmsViewer(props) {
             <div className='FilmsViewer'>
                 <Layout
                     header={
-                        <HeaderContainer/>
+                        <FilmsHeaderContainer/>
                     }
                     footer={
                         <Footer/>
