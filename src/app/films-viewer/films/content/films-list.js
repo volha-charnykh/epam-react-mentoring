@@ -4,10 +4,11 @@ import FilmItem from './film-item/film-item';
 import {useDispatch, useSelector} from "react-redux";
 import {selectFilms} from "../../../store/selectors";
 import {
+    loadFilms,
     setActiveGenre,
     setAddEditDialogOpen,
     setConfirmationDialog,
-    setFilmDetails, setSearchString,
+    setSearchString,
     setSelectedFilm
 } from "../../../store/slices";
 import {useHistory, useLocation} from "react-router-dom";
@@ -23,13 +24,17 @@ export default function FilmsList() {
     const title = query.get("title");
 
     useEffect(() => {
+        dispatch(loadFilms());
+    }, []);
+
+    useEffect(() => {
         dispatch(setActiveGenre(genre));
         dispatch(setSearchString(title));
     }, [genre, title]);
 
     useEffect(() => {
         if (!films.length) {
-            history.push('/no-films' + location.search);
+           history.push('/no-films' + location.search);
         }
     }, [films.length]);
 
@@ -55,9 +60,12 @@ export default function FilmsList() {
         },
     ];
 
-    const updateActiveFilm = (f) => {
+    const viewFilmDetails = (f) => {
+        history.push({
+            pathname: `/films/${f.id}`,
+            search: location.search
+        });
         window.scrollTo(0, 0);
-        dispatch(setFilmDetails(f));
     };
 
     return (<>
@@ -73,9 +81,7 @@ export default function FilmsList() {
                             key={el.id}
                             film={el}
                             actions={actions}
-                            clickHandler={() => {
-                                updateActiveFilm(el);
-                            }}/>)
+                            clickHandler={() => viewFilmDetails(el)}/>)
                 }
             </div>
         </>

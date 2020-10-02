@@ -1,26 +1,24 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import '../../../general/styles/buttons.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {selectFilmDetails} from "../../store/selectors/film-details.selector";
-import {setAddEditDialogOpen, setFilmDetails, setSearchString} from "../../store/slices";
-import {useHistory, useLocation} from "react-router-dom";
+import {setAddEditDialogOpen, setSearchString} from "../../store/slices";
+import {Redirect, Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
 import {selectSearchParams} from "../../store/selectors";
-import HeaderContainer from "../../header/header-container";
-
+import Loading from "../../../general/components/loading/loading";
 
 const ViewerHeader = React.lazy(() => import("./viewer-header/viewer-header"));
 const FilmDetailsHeader = React.lazy(() => import("./film-details-header/film-details-header"));
 
 export default function FilmsHeaderContainer() {
-    const filmDetails = useSelector(selectFilmDetails);
     const dispatch = useDispatch();
     const history = useHistory();
     const query = new URLSearchParams(useLocation().search);
     const genre = query.get("genre");
     const searchParams = useSelector(selectSearchParams);
+    const match = useRouteMatch();
 
     const updateSearchStr = str => {
-        if(str) {
+        if (str) {
             dispatch(setSearchString(str));
             history.push(`/films?title=${str}${genre ? '&genre=' + genre : ''}`);
         } else {
@@ -30,21 +28,25 @@ export default function FilmsHeaderContainer() {
     }
 
     return (
-        <HeaderContainer height={!filmDetails ? '300px' : '100%'}>
-            {
-                    !!filmDetails ?
-                        <FilmDetailsHeader
-                            film={filmDetails}
-                            onGoBack={() => {
-                                dispatch(setFilmDetails(null));
-                                history.push(`/no-films`);
-                            }}/>
-                        :
-                        <ViewerHeader
-                            searchString={searchParams.searchString}
-                            updateSearchStr={updateSearchStr}
-                            onAddFilm={() => dispatch(setAddEditDialogOpen(true))}/>
-                }
-        </HeaderContainer>
+        <Switch>
+            <Route exact
+                path={match.path}>
+                <Suspense fallback={<Loading/>}>
+                    <ViewerHeader
+                        searchString={searchParams.searchString}
+                        updateSearchStr={updateSearchStr}
+                        onAddFilm={() => dispatch(setAddEditDialogOpen(true))}/>
+                </Suspense>
+            </Route>
+            <Route exact path={`${match.path}/:filmId`}>
+                <Suspense fallback={<Loading/>}>
+                    <FilmDetailsHeader/>
+                </Suspense>
+            </Route>
+            <Route path="*"
+                render={() => (
+                    <Redirect to="/page-not-found"/>
+                )}/>
+        </Switch>
     );
 }

@@ -29,12 +29,12 @@ export default function App() {
                                     <Home/>
                                 </Suspense>
                             </Route>
-                            <Route exact  path="/no-films">
+                            <Route exact path="/no-films">
                                 <Suspense fallback={<Loading/>}>
                                     <FilmsViewer><NoFilms/></FilmsViewer>
                                 </Suspense>
                             </Route>
-                            <Route exact path="/films">
+                            <Route path="/films">
                                 <Suspense fallback={<Loading/>}>
                                     <FilmsViewer><Films/></FilmsViewer>
                                 </Suspense>
@@ -44,7 +44,7 @@ export default function App() {
                                     <PageNotFound/>
                                 </Suspense>
                             </Route>
-                            <Route
+                            <Route path="*"
                                 render={() => (
                                     <Redirect to="/page-not-found"/>
                                 )}/>
