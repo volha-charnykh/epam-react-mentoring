@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './no-films.scss';
 import {useHistory, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {selectFilms} from "../../store/selectors";
+import {selectFilms} from "../../store";
 
 
 export default function NoFilms() {

@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {FilmApi} from "../../api/films.api";
-import {setGenres} from "./genres.slice";
-import {selectSearchParams} from "../selectors";
+import {genresSlice, setGenres} from "./genres.slice";
+import {selectSearchParams} from "./search-params.slice";
 
 export const filmsSlice = createSlice({
     name: 'films',
@@ -34,5 +34,7 @@ export const updateFilm = (film, onSuccess = () => {}, onError = () => {}) => (d
 
 export const deleteFilm = (film, onSuccess = () => {}, onError = () => {}) => (dispatch) =>
     FilmApi.deleteFilm(film).then(d => onSuccess(dispatch, d)).catch(err => onError(dispatch, err));
+
+export const selectFilms = state => state.films;
 
 export default filmsSlice.reducer;

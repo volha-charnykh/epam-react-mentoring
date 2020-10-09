@@ -12,4 +12,6 @@ export const selectedFilmSlice = createSlice({
 
 export const {setSelectedFilm} = selectedFilmSlice.actions;
 
+export const selectSelectedFilm = state => state.selectedFilm;
+
 export default selectedFilmSlice.reducer;

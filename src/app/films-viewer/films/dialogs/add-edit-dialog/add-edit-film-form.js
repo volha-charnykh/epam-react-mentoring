@@ -36,7 +36,7 @@ AddEditFilmForm.propTypes = {
 }
 
 function AddEditFilmForm(props) {
-    const isEditMode = !!props.id;
+    const isEditMode = !!props.film;
 
     return (
         <Form>

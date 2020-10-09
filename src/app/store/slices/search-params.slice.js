@@ -59,4 +59,6 @@ export const setLimit = (limit) =>
         dispatch(loadFilms());
     };
 
+export const selectSearchParams = state => state.searchParams;
+
 export default searchParamsSlice.reducer;

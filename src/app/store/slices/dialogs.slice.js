@@ -22,4 +22,6 @@ export const dialogsSlice = createSlice({
 
 export const {setAddEditDialogOpen, setConfirmationDialog, setResultPopup} = dialogsSlice.actions;
 
+export const selectDialogs = state => state.dialogs;
+
 export default dialogsSlice.reducer;

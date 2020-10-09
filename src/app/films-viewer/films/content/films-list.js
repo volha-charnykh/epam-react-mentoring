@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './films-list.scss';
 import FilmItem from './film-item/film-item';
 import {useDispatch, useSelector} from "react-redux";
-import {selectFilms} from "../../../store/selectors";
+import {selectFilms} from "../../../store";
 import {
     loadFilms,
     setActiveGenre,
@@ -34,7 +34,7 @@ export default function FilmsList() {
 
     useEffect(() => {
         if (!films.length) {
-           history.push('/no-films' + location.search);
+            history.push('/no-films' + location.search);
         }
     }, [films.length]);
 

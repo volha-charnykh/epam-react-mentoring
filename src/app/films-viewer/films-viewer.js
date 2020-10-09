@@ -4,9 +4,8 @@ import Layout from '../../general/components/layout/layout';
 import './films-viewer.scss';
 import Tabs from "../../general/components/tabs/tabs";
 import Dropdown from "../../general/components/dropdown/dropdown";
-import {setSortOrder, setSortType} from "../store/slices";
+import {selectGenres, selectSearchParams, setSortOrder, setSortType} from "../store";
 import {useDispatch, useSelector} from "react-redux";
-import {selectGenres, selectSearchParams} from "../store/selectors";
 import {useHistory, useLocation} from "react-router-dom";
 import FilmsHeaderContainer from "./header/films-header-container";
 

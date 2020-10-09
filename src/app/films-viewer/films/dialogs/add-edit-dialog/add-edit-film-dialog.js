@@ -4,15 +4,16 @@ import '../../../../../general/styles/buttons.scss';
 import '../../../../../general/styles/form.scss';
 import Dialog from "../../../../../general/components/dialog/dialog";
 import {useDispatch, useSelector} from "react-redux";
-import {selectGenres, selectSelectedFilm} from "../../../../store/selectors";
 import {
     addFilm,
     loadFilms,
+    selectGenres,
+    selectSelectedFilm,
     setAddEditDialogOpen,
     setResultPopup,
     setSelectedFilm,
     updateFilm
-} from "../../../../store/slices";
+} from "../../../../store";
 import AddEditFilmForm from "./add-edit-film-form";
 
 

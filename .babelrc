@@ -6,6 +6,9 @@
   "plugins": [
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-syntax-throw-expressions",
-    "@babel/plugin-proposal-throw-expressions"
+    "@babel/plugin-proposal-throw-expressions",
+    ["@babel/plugin-transform-runtime", {
+      "regenerator": true
+    }]
   ]
 }

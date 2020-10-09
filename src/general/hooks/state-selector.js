@@ -1,6 +1,6 @@
 import {useCallback, useState} from "react";
 
-export const useSelector = (initValue = []) => {
+export const useStateSelector = (initValue = []) => {
 
     const [selected, setSelected] = useState(initValue);
 

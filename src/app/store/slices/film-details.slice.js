@@ -19,4 +19,6 @@ export const loadFilmDetails = (id, onSuccess = () => {}, onError = () => {}) =>
         return result;
     }).then(d => onSuccess(dispatch, d)).catch(err => onError(dispatch, err));
 
+export const selectFilmDetails = state => state.filmDetails;
+
 export default filmDetailsSlice.reducer;

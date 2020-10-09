@@ -1,6 +1,13 @@
-import {deleteFilm, loadFilms, setConfirmationDialog, setResultPopup, setSelectedFilm} from "../../../store/slices";
+import {
+    deleteFilm,
+    loadFilms,
+    selectDialogs,
+    selectSelectedFilm,
+    setConfirmationDialog,
+    setResultPopup,
+    setSelectedFilm
+} from "../../../store";
 import ConfirmationDialog from "../../../../general/components/confirmation-dialog/confirmation-dialog";
-import {selectDialogs, selectSelectedFilm} from "../../../store/selectors";
 import {useDispatch, useSelector} from "react-redux";
 import React from "react";
 

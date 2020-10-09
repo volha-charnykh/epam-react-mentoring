@@ -17,4 +17,6 @@ const calculateAllGenres = (state, films) => films.reduce((acc, cur) => {
     return acc;
 }, state);
 
+export const selectGenres = state => state.genres;
+
 export default genresSlice.reducer;

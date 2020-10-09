@@ -1,9 +1,8 @@
 import React, {Suspense} from 'react';
 import '../../../general/styles/buttons.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {setAddEditDialogOpen, setSearchString} from "../../store/slices";
+import {selectSearchParams, setAddEditDialogOpen, setSearchString} from "../../store";
 import {Redirect, Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
-import {selectSearchParams} from "../../store/selectors";
 import Loading from "../../../general/components/loading/loading";
 
 const ViewerHeader = React.lazy(() => import("./viewer-header/viewer-header"));
@@ -38,7 +37,8 @@ export default function FilmsHeaderContainer() {
                         onAddFilm={() => dispatch(setAddEditDialogOpen(true))}/>
                 </Suspense>
             </Route>
-            <Route exact path={`${match.path}/:filmId`}>
+            <Route exact
+                path={`${match.path}/:filmId`}>
                 <Suspense fallback={<Loading/>}>
                     <FilmDetailsHeader/>
                 </Suspense>

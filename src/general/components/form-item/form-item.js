@@ -14,7 +14,7 @@ export default function FormItem(props) {
 
     return (
         <>
-            <label className='FormItemLabel'>
+            <label className='FormItemLabel' htmlFor={props.label}>
                 {props.label}
                     <input
                         id={props.label}

@@ -3,10 +3,9 @@ import './film-details-header.scss';
 import '../../../../general/styles/buttons.scss';
 import noImage from "../../../../img/no-image.jpg";
 import Loading from "../../../../general/components/loading/loading";
-import {loadFilmDetails} from "../../../store/slices";
+import {loadFilmDetails, selectFilmDetails} from "../../../store";
 import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {selectFilmDetails} from "../../../store/selectors/film-details.selector";
 import HeaderContainer from "../../../header/header-container";
 
 export default function FilmDetailsHeader() {
