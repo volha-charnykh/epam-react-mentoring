@@ -49,7 +49,7 @@ describe('useStateSelector hook ', () => {
         const state = screen.getByText(/state/i);
         const length = screen.getByText(/length/i);
 
-        fireEvent.change(input, { target: { value: 'one' } });
+        input.value = 'one';
         userEvent.click(select);
 
         expect(state).toHaveTextContent(`State: one`);

@@ -3,10 +3,8 @@ import '../../../general/styles/dialog.scss';
 import '../../../general/styles/buttons.scss';
 import PropTypes from "prop-types";
 import Dialog from "../../../general/components/dialog/dialog";
-import {filmType} from "../../../app/util/prop-types/film.type";
 
 ConfirmationDialog.propTypes = {
-    film: filmType,
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     onConfirm: PropTypes.func.isRequired,

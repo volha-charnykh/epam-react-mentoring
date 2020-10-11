@@ -25,29 +25,24 @@
     width: 0;
   }
 
-  /* On mouse-over, add a grey background color */
   &:hover input ~ .checkmark {
     background-color: $light-grey;
   }
 
-  /* When the checkbox is checked, add a blue background */
   > input:checked ~ .checkmark {
     background-color: $red;
   }
 
-  /* Create the checkmark/indicator (hidden when not checked) */
   .checkmark:after {
     content: "";
     position: absolute;
     display: none;
   }
 
-  /* Show the checkmark when checked */
   > input:checked ~ .checkmark:after {
     display: block;
   }
 
-  /* Style the checkmark/indicator */
   > .checkmark:after {
     width: 3px;
     height: 7px;

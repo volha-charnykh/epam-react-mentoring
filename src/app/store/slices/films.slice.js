@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {FilmApi} from "../../api/films.api";
-import {genresSlice, setGenres} from "./genres.slice";
+import {setGenres} from "./genres.slice";
 import {selectSearchParams} from "./search-params.slice";
 
 export const filmsSlice = createSlice({

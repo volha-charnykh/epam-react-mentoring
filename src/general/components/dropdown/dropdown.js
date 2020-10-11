@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import './dropdown.scss';
 import '../../styles/buttons.scss';
 import MenuPanel, {menuItemType} from '../menu-panel/menu-panel';

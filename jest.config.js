@@ -3,8 +3,9 @@ module.exports = {
     collectCoverage: true,
     collectCoverageFrom: [
         "src/**",
+        "!**/__snapshots__/**",
     ],
-    coverageReporters: ["text-summary"],
+    coverageReporters: ["text-summary", "html"],
     moduleNameMapper: {
         "\\.scss$": "identity-obj-proxy",
     },

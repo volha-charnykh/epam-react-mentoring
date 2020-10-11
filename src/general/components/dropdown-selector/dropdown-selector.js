@@ -39,7 +39,7 @@ export default function DropdownSelector(props) {
 
     const onCheck = (el, state) => {
         const selected = [...selectedTitles];
-        if (state){
+        if (state) {
             selected.push(el.title);
         } else {
             selected.splice(selected.indexOf(el.title), 1);

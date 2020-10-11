@@ -2,15 +2,15 @@ import React, {useEffect} from 'react';
 import './films-list.scss';
 import FilmItem from './film-item/film-item';
 import {useDispatch, useSelector} from "react-redux";
-import {selectFilms} from "../../../store";
 import {
+    selectFilms,
     loadFilms,
     setActiveGenre,
     setAddEditDialogOpen,
     setConfirmationDialog,
     setSearchString,
     setSelectedFilm
-} from "../../../store/slices";
+} from "../../../store";
 import {useHistory, useLocation} from "react-router-dom";
 
 
