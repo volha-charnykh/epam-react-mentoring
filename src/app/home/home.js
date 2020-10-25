@@ -4,12 +4,11 @@ import Layout from '../../general/components/layout/layout';
 import './home.scss';
 import '../../general/styles/buttons.scss';
 import Logo from "../../general/components/logo/logo";
-import {useHistory} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import HeaderContainer from "../header/header-container";
 
 
 export default function PageNotFound() {
-    let history = useHistory();
     return (
         <>
             <Layout
@@ -27,9 +26,8 @@ export default function PageNotFound() {
                 <div className="Home">
                     <div className="HomeContent">
                         <div className="HomeTitle">Let's search for movies!</div>
-                        <div className="ActionButton"
-                            onClick={() => history.push('/films')}>Search
-                        </div>
+                        <NavLink className="ActionButton"
+                            to='/films'>Search </NavLink>
                     </div>
                 </div>
             </Layout>

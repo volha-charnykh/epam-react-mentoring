@@ -5,12 +5,10 @@ import './page-not-found.scss';
 import '../../general/styles/buttons.scss';
 import img from '../../img/page-not-found.png';
 import Logo from "../../general/components/logo/logo";
-import {useHistory} from "react-router-dom";
-
+import {NavLink} from "react-router-dom";
 
 
 export default function PageNotFound() {
-    let history = useHistory();
     return (
         <>
                 <Layout
@@ -25,7 +23,7 @@ export default function PageNotFound() {
                                 src={img}
                                 alt='404'
                                 className='PageNotFoundImage'/>
-                            <div className="ActionButton" onClick={() => history.push('/')}>Go back to home</div>
+                            <NavLink className="ActionButton" to='/'>Go back to home</NavLink>
                         </div>
                     </div>
                 </Layout>

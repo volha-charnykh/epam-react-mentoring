@@ -12,6 +12,7 @@ import {
     setSelectedFilm
 } from "../../../store";
 import {useHistory, useLocation} from "react-router-dom";
+import {useServerEffect} from "../../../../general/hooks/server-effect";
 
 
 export default function FilmsList() {
@@ -22,6 +23,14 @@ export default function FilmsList() {
     const query = new URLSearchParams(location.search);
     const genre = query.get("genre");
     const title = query.get("title");
+
+    useServerEffect([], "films", () => {
+            dispatch(setActiveGenre(genre));
+            dispatch(setSearchString(title));
+            return new Promise((resolve) => resolve((!films || (Array.isArray(films) && !films.length)) &&
+                dispatch(loadFilms())))
+        }
+    );
 
     useEffect(() => {
         dispatch(loadFilms());

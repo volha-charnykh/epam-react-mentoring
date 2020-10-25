@@ -1,12 +1,14 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import '../../../general/styles/buttons.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {selectSearchParams, setAddEditDialogOpen, setSearchString} from "../../store";
+import {selectSearchParams, setAddEditDialogOpen, setSearchString, setSelectedFilm} from "../../store";
 import {Redirect, Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
 import Loading from "../../../general/components/loading/loading";
+import ViewerHeader from "./viewer-header/viewer-header";
+import FilmDetailsHeader from "./film-details-header/film-details-header";
 
-const ViewerHeader = React.lazy(() => import("./viewer-header/viewer-header"));
-const FilmDetailsHeader = React.lazy(() => import("./film-details-header/film-details-header"));
+// const ViewerHeader = React.lazy(() => import("./viewer-header/viewer-header"));
+// const FilmDetailsHeader = React.lazy(() => import("./film-details-header/film-details-header"));
 
 export default function FilmsHeaderContainer() {
     const dispatch = useDispatch();
@@ -26,22 +28,23 @@ export default function FilmsHeaderContainer() {
         }
     }
 
+    const openAddDialog = () => {
+        dispatch(setSelectedFilm(null));
+        dispatch(setAddEditDialogOpen(true));
+    }
+
     return (
         <Switch>
             <Route exact
                 path={match.path}>
-                <Suspense fallback={<Loading/>}>
                     <ViewerHeader
                         searchString={searchParams.searchString}
                         updateSearchStr={updateSearchStr}
-                        onAddFilm={() => dispatch(setAddEditDialogOpen(true))}/>
-                </Suspense>
+                        onAddFilm={openAddDialog}/>
             </Route>
             <Route exact
                 path={`${match.path}/:filmId`}>
-                <Suspense fallback={<Loading/>}>
                     <FilmDetailsHeader/>
-                </Suspense>
             </Route>
             <Route path="*"
                 render={() => (

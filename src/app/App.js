@@ -1,57 +1,74 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import './App.scss';
 import AppErrorBoundary from "./error-boundary/app-error-boundary";
-import Loading from "../general/components/loading/loading";
 import {Provider} from 'react-redux';
-import store from "./store";
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import {hot} from 'react-hot-loader';
+import {Redirect, Route, Switch} from "react-router-dom";
+import Loadable from 'react-loadable';
+import Loading from "../general/components/loading/loading";
+import FilmsViewer from "./films-viewer/films-viewer";
+import NoFilms from "./films-viewer/no-films/no-films";
+import PageNotFound from "./page-not-found/page-not-found";
+import Films from "./films-viewer/films/films";
+import Home from './home/home';
 
-const FilmsViewer = React.lazy(() => import("./films-viewer/films-viewer"));
-const Films = React.lazy(() => import("./films-viewer/films/films"));
-const PageNotFound = React.lazy(() => import("./page-not-found/page-not-found"));
-const NoFilms = React.lazy(() => import("./films-viewer/no-films/no-films"));
-const Home = React.lazy(() => import("./home/home"));
+// const FilmsViewer = Loadable({
+//     loader: () => import("./films-viewer/films-viewer"),
+//     loading: Loading,
+// });
+// const Films = Loadable({
+//     loader: () => import("./films-viewer/films/films"),
+//     loading: Loading,
+// });
+// const PageNotFound = Loadable({
+//     loader: () => import("./page-not-found/page-not-found"),
+//     loading: Loading,
+// });
+// const NoFilms = Loadable({
+//     loader: () => import("./films-viewer/no-films/no-films"),
+//     loading: Loading,
+// });
+// const Home = Loadable({
+//     loader: () => import("./home/home"),
+//     loading: Loading,
+// });
 
-export default function App() {
-    return (
-        <React.StrictMode>
-            <AppErrorBoundary>
-                <Provider store={store}>
-                    <Router>
-                        <Switch>
-                            <Route exact
-                                path="/"
-                                render={() => (
-                                    <Redirect to="/home"/>
-                                )}/>
-                            <Route exact  path="/home">
-                                <Suspense fallback={<Loading/>}>
-                                    <Home/>
-                                </Suspense>
-                            </Route>
-                            <Route exact path="/no-films">
-                                <Suspense fallback={<Loading/>}>
-                                    <FilmsViewer><NoFilms/></FilmsViewer>
-                                </Suspense>
-                            </Route>
-                            <Route path="/films">
-                                <Suspense fallback={<Loading/>}>
-                                    <FilmsViewer><Films/></FilmsViewer>
-                                </Suspense>
-                            </Route>
-                            <Route exact path="/page-not-found">
-                                <Suspense fallback={<Loading/>}>
-                                    <PageNotFound/>
-                                </Suspense>
-                            </Route>
-                            <Route path="*"
-                                render={() => (
-                                    <Redirect to="/page-not-found"/>
-                                )}/>
-                        </Switch>
-                    </Router>
-                </Provider>
-            </AppErrorBoundary>
-        </React.StrictMode>
-    );
-}
+const App = ({Router, location, context, store}) => (
+    <React.StrictMode>
+        <AppErrorBoundary>
+            <Provider store={store}>
+                <Router location={location}
+                    context={context}>
+                    <Switch>
+                        <Route exact
+                            path="/"
+                            render={() => (
+                                <Redirect to="/home"/>
+                            )}/>
+                        <Route exact
+                            path="/home">
+                            <Home/>
+                        </Route>
+                        <Route exact
+                            path="/no-films">
+                            <FilmsViewer><NoFilms/></FilmsViewer>
+                        </Route>
+                        <Route path="/films">
+                            <FilmsViewer><Films/></FilmsViewer>
+                        </Route>
+                        <Route exact
+                            path="/page-not-found">
+                            <PageNotFound/>
+                        </Route>
+                        <Route path="*"
+                            render={() => (
+                                <Redirect to="/page-not-found"/>
+                            )}/>
+                    </Switch>
+                </Router>
+            </Provider>
+        </AppErrorBoundary>
+    </React.StrictMode>
+);
+
+export default App;

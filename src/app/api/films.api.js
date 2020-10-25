@@ -1,4 +1,5 @@
 import config from './config';
+import "isomorphic-fetch";
 
 export const moviesUrl = config.apiUrl + 'movies';
 

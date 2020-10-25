@@ -33,6 +33,7 @@
   @extend .Button;
   border: solid 1px $red;
   color: $red;
+  text-decoration: none;
 }
 
 .DropdownButton {

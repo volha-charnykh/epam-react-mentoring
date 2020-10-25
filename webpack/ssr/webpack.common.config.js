@@ -1,17 +1,14 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: './src/index.js',
-    output: {
-        filename: 'bundle.js',
-        chunkFilename: '[name].[hash].bundle.js'
-    },
     resolve: {
-        modules: [path.join(__dirname, './src'), 'node_modules'],
-        extensions:  ['.js']
+        modules: [path.join(__dirname, 'src'), 'node_modules'],
+        extensions:  ['.js'],
+        alias: {
+            'react-dom': '@hot-loader/react-dom',
+        }
     },
     optimization: {
         splitChunks: {
@@ -33,7 +30,8 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
-                    'css-loader'
+                    'css-loader',
+
                 ]
             },
             {
@@ -46,20 +44,23 @@ module.exports = {
             },
             {
                 test: /\.(svg|png|jpe?g|gif)$/i,
-                loader: 'file-loader'
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    publicPath: '/'
+                }
             }
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebPackPlugin({
             template: './src/index.html',
             filename: './index.html',
             minify: { collapseWhitespace: true }
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].css',
+            filename: "styles.css",
             chunkFilename: '[name].css'
-        })
+        }),
     ]
 };

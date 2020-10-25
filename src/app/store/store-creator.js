@@ -6,7 +6,8 @@ import selectedFilmReducer from './slices/selected-film.slice';
 import searchParamsReducer from './slices/search-params.slice';
 import dialogsReducer from './slices/dialogs.slice';
 
-export default configureStore({
+const createStore = state =>  configureStore({
+    preloadedState: state,
     reducer: {
         filmDetails: filmDetailsReducer,
         films: filmsReducer,
@@ -16,3 +17,5 @@ export default configureStore({
         dialogs: dialogsReducer,
     }
 });
+
+export default createStore;
