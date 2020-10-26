@@ -2,36 +2,30 @@ import React from 'react';
 import './App.scss';
 import AppErrorBoundary from "./error-boundary/app-error-boundary";
 import {Provider} from 'react-redux';
-import {hot} from 'react-hot-loader';
 import {Redirect, Route, Switch} from "react-router-dom";
 import Loadable from 'react-loadable';
 import Loading from "../general/components/loading/loading";
-import FilmsViewer from "./films-viewer/films-viewer";
-import NoFilms from "./films-viewer/no-films/no-films";
-import PageNotFound from "./page-not-found/page-not-found";
-import Films from "./films-viewer/films/films";
-import Home from './home/home';
 
-// const FilmsViewer = Loadable({
-//     loader: () => import("./films-viewer/films-viewer"),
-//     loading: Loading,
-// });
-// const Films = Loadable({
-//     loader: () => import("./films-viewer/films/films"),
-//     loading: Loading,
-// });
-// const PageNotFound = Loadable({
-//     loader: () => import("./page-not-found/page-not-found"),
-//     loading: Loading,
-// });
-// const NoFilms = Loadable({
-//     loader: () => import("./films-viewer/no-films/no-films"),
-//     loading: Loading,
-// });
-// const Home = Loadable({
-//     loader: () => import("./home/home"),
-//     loading: Loading,
-// });
+const FilmsViewer = Loadable({
+    loader: () => import("./films-viewer/films-viewer"),
+    loading: Loading,
+});
+const Films = Loadable({
+    loader: () => import("./films-viewer/films/films"),
+    loading: Loading,
+});
+const PageNotFound = Loadable({
+    loader: () => import("./page-not-found/page-not-found"),
+    loading: Loading,
+});
+const NoFilms = Loadable({
+    loader: () => import("./films-viewer/no-films/no-films"),
+    loading: Loading,
+});
+const Home = Loadable({
+    loader: () => import("./home/home"),
+    loading: Loading,
+});
 
 const App = ({Router, location, context, store}) => (
     <React.StrictMode>

@@ -3,7 +3,7 @@ const {merge} = require('webpack-merge');
 const common = require('../webpack.common.config.js');
 const webpack = require('webpack');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-
+const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
 
 module.exports = merge(common, {
     name: 'client',
@@ -23,5 +23,6 @@ module.exports = merge(common, {
 
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new ReactLoadablePlugin({ filename: `./dev/react-loadable.json` }),
     ]
 });

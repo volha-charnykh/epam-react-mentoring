@@ -56,6 +56,7 @@ module.exports = {
         new HtmlWebPackPlugin({
             template: './src/index.html',
             filename: './index.html',
+            favicon: "./src/img/favicon.png",
             minify: { collapseWhitespace: true }
         }),
         new MiniCssExtractPlugin({
