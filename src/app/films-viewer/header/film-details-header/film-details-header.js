@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './film-details-header.scss';
 import '../../../../general/styles/buttons.scss';
 import noImage from "../../../../img/no-image.jpg";
@@ -39,6 +39,11 @@ export default function FilmDetailsHeader() {
         });
     }
 
+    const onImageError = useCallback((e) => {
+        e.target.onerror = null;
+        e.target.src = noImage
+    }, []);
+
     return (
         <HeaderContainer>
             <div className='FilmDetailsBack'
@@ -49,10 +54,7 @@ export default function FilmDetailsHeader() {
                     filmDetails ?
                         <> <img className='FilmDetailsImage'
                             src={filmDetails.poster_path || noImage}
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = noImage
-                            }}
+                            onError={onImageError}
                             alt='film-logo'/>
                             <div className="FilmDetails">
                                 <div className='FilmTitleContainer'>

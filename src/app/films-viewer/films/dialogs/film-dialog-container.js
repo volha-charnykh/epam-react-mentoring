@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useCallback} from 'react';
 import Loading from "../../../../general/components/loading/loading";
 import {useDispatch, useSelector} from "react-redux";
 import {selectDialogs, setResultPopup} from "../../../store";
@@ -12,6 +12,8 @@ export default function FilmDialogContainer() {
 
     const dialogs = useSelector(selectDialogs);
     const dispatch = useDispatch();
+
+    const onResultPopupClose = useCallback(() => dispatch(setResultPopup(null)), [dispatch, setResultPopup()]);
 
     return (<>
             {
@@ -27,7 +29,7 @@ export default function FilmDialogContainer() {
                         title={dialogs.resultPopup.title}
                         description={dialogs.resultPopup.description}
                         type={dialogs.resultPopup.type}
-                        onClose={() => dispatch(setResultPopup(null))}/>
+                        onClose={onResultPopupClose}/>
                 </Suspense>
             }
             {

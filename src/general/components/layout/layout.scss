@@ -1,3 +1,8 @@
+.LayoutWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
 .Layout {
   display: flex;
   flex-direction: column;
@@ -20,4 +25,6 @@
   .Layout-Content {
     width: 100%;
   }
+}
+
 }

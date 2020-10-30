@@ -1,37 +1,46 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './three-dot-menu.scss';
-import MenuPanel, {menuItemType} from '../menu-panel/menu-panel';
 import PropTypes from 'prop-types';
-import {useToggle} from "../../hooks/toggle";
+import MenuPanel, { menuItemType } from '../menu-panel/menu-panel';
+import { useToggle } from '../../hooks/toggle';
 
 ThreeDotMenu.propTypes = {
-    items: PropTypes.arrayOf(menuItemType).isRequired,
-    onItemSelected: PropTypes.func.isRequired
-}
+  items: PropTypes.arrayOf(menuItemType).isRequired,
+  onItemSelected: PropTypes.func.isRequired,
+};
 
 export default function ThreeDotMenu(props) {
-    const [isMenuOpen, setMenuOpen] = useToggle(false);
+  const [isMenuOpen, setMenuOpen] = useToggle(false);
 
-    const onItemSelected = (el) => {
-        setMenuOpen();
-        props.onItemSelected(el);
-    }
+  const onItemSelected = useCallback((el) => {
+    setMenuOpen();
+    props.onItemSelected(el);
+  }, [props.onItemSelected]);
 
-    return (<>
-        {
-            !isMenuOpen &&
-            <div className='ThreeDots'
-                onClick={() => setMenuOpen()}>
-            </div>
+  const onMenuOpen = useCallback(() => setMenuOpen(), []);
+
+  return (
+    <>
+      {
+            !isMenuOpen
+            && (
+            <div
+              className="ThreeDots"
+              onClick={onMenuOpen}
+            />
+            )
         }
-        {
-            isMenuOpen &&
+      {
+            isMenuOpen
+            && (
             <MenuPanel
-                closable={true}
-                items={props.items}
-                onClick={() => setMenuOpen()}
-                onItemSelected={onItemSelected}>
-            </MenuPanel>
+              closable
+              items={props.items}
+              onClick={onMenuOpen}
+              onItemSelected={onItemSelected}
+            />
+            )
         }
-    </>);
+    </>
+  );
 }
