@@ -1,37 +1,37 @@
-import {render} from "@testing-library/react";
-import React from "react";
+import { render } from '@testing-library/react';
+import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import Panel from "./panel";
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
+import Panel from './panel';
 
 describe('Panel', () => {
+  it('should correctly set init state', () => {
+    const { container } = render(
+      <Panel>
+        <div className="TestClass" />
+      </Panel>,
+    );
 
-    it('should correctly set init state', () => {
-        const {container} = render(<Panel>
-            <div className="TestClass">
-            </div>
-        </Panel>);
+    expect(container.querySelector('.TestClass')).toBeInTheDocument();
+  });
 
-        expect(container.querySelector('.TestClass')).toBeInTheDocument();
+  it('should correctly close', (done) => {
+    const { container } = render(
+      <Panel
+        closable
+        onClose={() => {
+          expect(true).toBeTruthy();
+          done();
+        }}
+      >
+        <div className="TestClass" />
+      </Panel>,
+    );
 
-    });
+    const close = container.querySelector('.PanelCloseMark');
 
-    it('should correctly close', (done) => {
-        const {container} = render(<Panel
-            closable={true}
-            onClose={() => {
-                expect(true).toBeTruthy();
-                done();
-            }}>
-            <div className="TestClass">
-            </div>
-        </Panel>);
+    expect(close).toBeInTheDocument();
 
-        const close = container.querySelector('.PanelCloseMark');
-
-        expect(close).toBeInTheDocument();
-
-        userEvent.click(close);
-
-    });
-})
+    userEvent.click(close);
+  });
+});

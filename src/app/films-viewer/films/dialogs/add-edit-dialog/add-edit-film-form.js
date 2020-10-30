@@ -5,10 +5,9 @@ import '../../../../../general/styles/form.scss';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Field, Form, withFormik } from 'formik';
-import { filmType } from '../../../../util/prop-types/film.type';
+import filmType from '../../../../util/prop-types/film.type';
 import DropdownSelector from '../../../../../general/components/dropdown-selector/dropdown-selector';
 import FormItem from '../../../../../general/components/form-item/form-item';
-import debounce from '../../../../util/functions/debounce';
 
 const FilmSchema = Yup.object().shape({
   id: Yup.string(),
@@ -30,9 +29,12 @@ const FilmSchema = Yup.object().shape({
 });
 
 function AddEditFilmForm(props) {
-  const isEditMode = !!props.film;
-  const onClose = useCallback(() => props.onClose(false), [props.onClose]);
-  const onItemSelect = useCallback((items) => props.setFieldValue('genres', items), [props.setFieldValue]);
+  const {
+    film, onClose, setFieldValue, genres,
+  } = props;
+  const isEditMode = !!film;
+  const close = useCallback(() => onClose(false), [onClose]);
+  const onItemSelect = useCallback((items) => setFieldValue('genres', items), [setFieldValue]);
 
   return (
     <Form>
@@ -45,10 +47,10 @@ function AddEditFilmForm(props) {
                 && (
                 <Field name="id">
                   {({ field }) => (
-                    <label className="FormItemLabel">
+                    <div className="FormItemLabel">
                       Movie ID
                       <div className="NotEditableFormItem">{field.value}</div>
-                    </label>
+                    </div>
                   )}
                 </Field>
                 )}
@@ -74,13 +76,13 @@ function AddEditFilmForm(props) {
         <Field name="genres">
           {({ field, meta }) => (
             <>
-              <label className="FormItemLabel">
+              <div className="FormItemLabel">
                 Genres
-              </label>
+              </div>
               <DropdownSelector
                 defaultTitle="Select Genres"
                 markInvalid={!!meta.error}
-                available={props.genres || []}
+                available={genres || []}
                 onSelect={onItemSelect}
                 {...field}
               />
@@ -110,7 +112,7 @@ function AddEditFilmForm(props) {
           key="reset"
           tabIndex={0}
           className="ActionButton"
-          onClick={onClose}
+          onClick={close}
         >
           Reset
         </div>
@@ -125,6 +127,18 @@ function AddEditFilmForm(props) {
     </Form>
   );
 }
+
+AddEditFilmForm.propTypes = {
+  film: filmType,
+  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onSave: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+};
+
+AddEditFilmForm.defaultProps = {
+  film: null,
+};
 
 const AddEditFilmFormikWrapper = withFormik({
 
@@ -155,12 +169,5 @@ const AddEditFilmFormikWrapper = withFormik({
     vote_average: values.vote_average || 0,
   }),
 })(AddEditFilmForm);
-
-AddEditFilmFormikWrapper.propTypes = {
-  film: filmType,
-  genres: PropTypes.arrayOf(PropTypes.string),
-  onSave: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default AddEditFilmFormikWrapper;

@@ -4,16 +4,11 @@ import '../../styles/buttons.scss';
 import '../../styles/form.scss';
 import PropTypes from 'prop-types';
 
-SearchBox.propTypes = {
-  searchString: PropTypes.string,
-  searchButtonLabel: PropTypes.string,
-  search: PropTypes.func.isRequired,
-};
-
 export default function SearchBox(props) {
-  const [text, setText] = useState(props.searchString || '');
+  const { searchString, searchButtonLabel } = props;
+  const [text, setText] = useState(searchString);
 
-  useEffect(() => setText(props.searchString || ''), [props.searchString]);
+  useEffect(() => setText(searchString), [searchString]);
 
   const onTextChange = useCallback((event) => setText(event.target.value), []);
 
@@ -34,8 +29,19 @@ export default function SearchBox(props) {
         className="PrimaryButton"
         onClick={search}
       >
-        {props.searchButtonLabel || 'Search'}
+        {searchButtonLabel}
       </div>
     </div>
   );
 }
+
+SearchBox.propTypes = {
+  searchString: PropTypes.string,
+  searchButtonLabel: PropTypes.string,
+  search: PropTypes.func.isRequired,
+};
+
+SearchBox.defaultProps = {
+  searchString: '',
+  searchButtonLabel: 'Search',
+};

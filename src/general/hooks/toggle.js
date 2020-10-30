@@ -1,9 +1,9 @@
-import {useCallback, useState} from "react";
+import { useCallback, useState } from 'react';
 
-export const useToggle = (initValue = false) => {
-    const [flag, setFlag] = useState(initValue);
+export default (initValue = false) => {
+  const [flag, setFlag] = useState(initValue);
 
-    const toggle = useCallback(() => setFlag(!flag), [flag]);
+  const toggle = useCallback(() => setFlag(!flag), [flag]);
 
-    return [flag, toggle];
-}
+  return [flag, toggle];
+};

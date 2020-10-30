@@ -1,2 +1,2 @@
-export {default} from './store-creator';
+export { default } from './store-creator';
 export * from './slices';

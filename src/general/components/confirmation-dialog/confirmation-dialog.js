@@ -4,29 +4,25 @@ import '../../styles/buttons.scss';
 import PropTypes from 'prop-types';
 import Dialog from '../dialog/dialog';
 
-ConfirmationDialog.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  onConfirm: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
-
 export default function ConfirmationDialog(props) {
+  const {
+    onClose, title, description, onConfirm,
+  } = props;
   return (
-    <Dialog onClose={props.onClose}>
+    <Dialog onClose={onClose}>
       <div className="DialogContainer">
         <div className="DialogTitle">
-          {props.title}
+          {title}
         </div>
         <div className="DialogDescription">
-          {props.description}
+          {description}
         </div>
       </div>
       <div className="DialogActionContainer">
         <div
           key="Confirm"
           className="PrimaryButton"
-          onClick={props.onConfirm}
+          onClick={onConfirm}
         >
           Confirm
         </div>
@@ -34,3 +30,14 @@ export default function ConfirmationDialog(props) {
     </Dialog>
   );
 }
+
+ConfirmationDialog.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  onConfirm: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+ConfirmationDialog.defaultProps = {
+  description: '',
+};

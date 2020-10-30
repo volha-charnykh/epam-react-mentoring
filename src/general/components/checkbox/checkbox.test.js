@@ -1,48 +1,55 @@
-import {render, screen} from "@testing-library/react";
-import React from "react";
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import Checkbox from "./checkbox";
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
+import Checkbox from './checkbox';
 
 describe('Checkbox', () => {
+  it('should correctly set init state', () => {
+    render(<Checkbox title="Title" checked onCheck={() => {}} />);
 
-    it('should correctly set init state', () => {
-        render(<Checkbox title="Title" checked={true} onCheck={() => {}}/>);
+    const checkbox = screen.getByRole(/checkbox/i);
 
-        const checkbox = screen.getByRole(/checkbox/i);
+    expect(checkbox).toBeInTheDocument();
+    expect(checkbox.checked).toBeTruthy();
+  });
 
-        expect(checkbox).toBeInTheDocument();
-        expect(checkbox.checked).toBeTruthy();
-    });
+  it('should correctly set init state', () => {
+    render(<Checkbox title="Title" checked={false} onCheck={() => {}} />);
 
-    it('should correctly set init state', () => {
-        render(<Checkbox title="Title" checked={false} onCheck={() => {}}/>);
+    const checkbox = screen.getByRole(/checkbox/i);
 
-        const checkbox = screen.getByRole(/checkbox/i);
+    expect(checkbox).toBeInTheDocument();
+    expect(checkbox.checked).toBeFalsy();
+  });
 
-        expect(checkbox).toBeInTheDocument();
-        expect(checkbox.checked).toBeFalsy();
-    });
+  it('should correctly change state', (done) => {
+    render(<Checkbox
+      title="Title"
+      checked={false}
+      onCheck={(checked) => {
+        expect(checked).toBeTruthy();
+        done();
+      }}
+    />);
 
-    it('should correctly change state', (done) => {
-        render(<Checkbox title="Title" checked={false} onCheck={(checked) => {
-            expect(checked).toBeTruthy()
-            done()
-        }}/>);
+    const checkbox = screen.getByRole(/checkbox/i);
 
-        const checkbox = screen.getByRole(/checkbox/i);
+    userEvent.click(checkbox);
+  });
 
-         userEvent.click(checkbox);
-    });
+  it('should correctly change state', (done) => {
+    render(<Checkbox
+      title="Title"
+      checked
+      onCheck={(checked) => {
+        expect(checked).toBeFalsy();
+        done();
+      }}
+    />);
 
-    it('should correctly change state', (done) => {
-        render(<Checkbox title="Title" checked={true} onCheck={(checked) => {
-            expect(checked).toBeFalsy()
-            done()
-        }}/>);
+    const checkbox = screen.getByRole(/checkbox/i);
 
-        const checkbox = screen.getByRole(/checkbox/i);
-
-        userEvent.click(checkbox);
-    });
-})
+    userEvent.click(checkbox);
+  });
+});

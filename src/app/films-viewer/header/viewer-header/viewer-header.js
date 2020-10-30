@@ -5,28 +5,33 @@ import '../../../../general/styles/buttons.scss';
 import SearchBox from '../../../../general/components/search-box/search-box';
 import HeaderContainer from '../../../header/header-container';
 
-ViewerHeader.propTypes = {
-  searchString: PropTypes.string,
-  updateSearchStr: PropTypes.func.isRequired,
-  onAddFilm: PropTypes.func.isRequired,
-};
-
 export default function ViewerHeader(props) {
+  const { onAddFilm, searchString, updateSearchStr } = props;
   return (
     <HeaderContainer height="300px">
       <div
         className="TransparentButton HeaderRightCorner"
-        onClick={props.onAddFilm}
+        onClick={onAddFilm}
       >
         + ADD MOVIE
       </div>
       <div className="SearchContainer">
         <span className="SearchTitle">Find your movie</span>
         <SearchBox
-          searchString={props.searchString}
-          search={props.updateSearchStr}
+          searchString={searchString}
+          search={updateSearchStr}
         />
       </div>
     </HeaderContainer>
   );
 }
+
+ViewerHeader.propTypes = {
+  searchString: PropTypes.string,
+  updateSearchStr: PropTypes.func.isRequired,
+  onAddFilm: PropTypes.func.isRequired,
+};
+
+ViewerHeader.defaultProps = {
+  searchString: '',
+};

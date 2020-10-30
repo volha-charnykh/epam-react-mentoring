@@ -22,24 +22,24 @@ export default function AddEditFilmDialog() {
   const dispatch = useDispatch();
 
   const saveFilm = (f) => {
-    const onSuccess = (dispatch) => {
-      dispatch(loadFilms());
-      dispatch(setAddEditDialogOpen(false));
-      dispatch(setResultPopup({
+    const onSuccess = (dis) => {
+      dis(loadFilms());
+      dis(setAddEditDialogOpen(false));
+      dis(setResultPopup({
         title: 'Congratulations!',
         description: `The movie has been ${film ? 'edited' : 'added'} successfully`,
         type: 'Success',
       }));
-      dispatch(setSelectedFilm(null));
+      dis(setSelectedFilm(null));
     };
-    const onError = (dispatch, err) => {
-      dispatch(setAddEditDialogOpen(false));
-      dispatch(setResultPopup({
+    const onError = (dis, err) => {
+      dis(setAddEditDialogOpen(false));
+      dis(setResultPopup({
         title: 'Oops!',
         description: `Can't delete movie. ${err}`,
         type: 'Failure',
       }));
-      dispatch(setSelectedFilm(null));
+      dis(setSelectedFilm(null));
     };
     if (film) {
       dispatch(updateFilm(f, onSuccess, onError));
@@ -48,7 +48,8 @@ export default function AddEditFilmDialog() {
     }
   };
 
-  const onDialogClose = useCallback(() => dispatch(setAddEditDialogOpen(false)), [dispatch, setAddEditDialogOpen()]);
+  const onDialogClose = useCallback(() => dispatch(setAddEditDialogOpen(false)),
+    [dispatch, setAddEditDialogOpen()]);
 
   return (
     <Dialog onClose={onDialogClose}>

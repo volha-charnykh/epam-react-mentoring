@@ -1,3 +1,30 @@
 {
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": ["jest"],
+  "env": {
+    "jest/globals": true
+  },
+  "globals": {
+    "fetch": false,
+    "document": true,
+    "window": true
+  },
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-console": "off",
+    "no-throw-literal": 0,
+    "import/no-cycle": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/no-noninteractive-tabindex": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/mouse-events-have-key-events": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "react/jsx-no-bind": 0,
+    "react/jsx-props-no-spreading": 0
+  }
 }

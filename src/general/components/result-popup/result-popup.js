@@ -6,23 +6,30 @@ import PropTypes from 'prop-types';
 import Dialog from '../dialog/dialog';
 import './result-popup.scss';
 
-ResultPopup.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  type: PropTypes.oneOf(['Success', 'Failure']),
-  onClose: PropTypes.func.isRequired,
-};
-
 export default function ResultPopup(props) {
+  const {
+    type, title, description, onClose,
+  } = props;
   return (
-    <Dialog onClose={props.onClose}>
+    <Dialog onClose={onClose}>
       <div className="Popup DialogContainer">
-        <div className={`ResultIcon ${props.type}`} />
+        <div className={`ResultIcon ${type}`} />
         <div className="DialogTitle">
-          <div>{props.title}</div>
+          <div>{title}</div>
         </div>
-        <div>{props.description}</div>
+        <div>{description}</div>
       </div>
     </Dialog>
   );
 }
+
+ResultPopup.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  type: PropTypes.oneOf(['Success', 'Failure']).isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+ResultPopup.defaultProps = {
+  description: '',
+};

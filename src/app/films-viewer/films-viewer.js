@@ -1,4 +1,7 @@
 import React, { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Footer from '../footer/footer';
 import Layout from '../../general/components/layout/layout';
 import './films-viewer.scss';
@@ -7,8 +10,6 @@ import Dropdown from '../../general/components/dropdown/dropdown';
 import {
   selectGenres, selectSearchParams, setSortOrder, setSortType,
 } from '../store';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
 import FilmsHeaderContainer from './header/films-header-container';
 
 const SelectAllTabName = 'All';
@@ -24,9 +25,12 @@ export default function FilmsViewer(props) {
   const genres = useSelector(selectGenres);
   const dispatch = useDispatch();
   const location = useLocation();
+  const { children } = props;
 
-  const activeTab = useMemo(() => searchParams.activeGenre || SelectAllTabName, [searchParams.activeGenre]);
-  const activeSortItem = useMemo(() => availableSortItems.find((el) => el.filmField === searchParams.sortType), [searchParams.sortType]);
+  const activeTab = useMemo(() => searchParams.activeGenre || SelectAllTabName,
+    [searchParams.activeGenre]);
+  const activeSortItem = useMemo(() => availableSortItems
+    .find((el) => el.filmField === searchParams.sortType), [searchParams.sortType]);
   const tabs = useMemo(() => [SelectAllTabName, ...genres], [genres]);
 
   const history = useHistory();
@@ -53,10 +57,10 @@ export default function FilmsViewer(props) {
       <Layout
         header={
           <FilmsHeaderContainer />
-                    }
+                }
         footer={
           <Footer />
-                    }
+                }
       >
 
         <div className="FilmsContent">
@@ -78,10 +82,10 @@ export default function FilmsViewer(props) {
                   className={`SortButton ${searchParams.sortOrder === 'asc' ? 'AscSorting' : 'DscSorting'}`}
                 />
               </>
-                              )}
+                        )}
           >
             <div className="ContentContainer">
-              {props.children}
+              {children}
             </div>
           </Tabs>
         </div>
@@ -89,3 +93,10 @@ export default function FilmsViewer(props) {
     </>
   );
 }
+
+FilmsViewer.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};

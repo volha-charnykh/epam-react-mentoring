@@ -4,34 +4,31 @@ import '../../styles/buttons.scss';
 import PropTypes from 'prop-types';
 import Checkbox from '../checkbox/checkbox';
 import Panel from '../panel/panel';
-import { useToggle } from '../../hooks/toggle';
-
-DropdownSelector.propTypes = {
-  defaultTitle: PropTypes.string,
-  value: PropTypes.arrayOf(PropTypes.string),
-  available: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSelect: PropTypes.func.isRequired,
-};
+import useToggle from '../../hooks/toggle';
 
 export default function DropdownSelector(props) {
+  const {
+    available, value, defaultTitle, markInvalid,
+  } = props;
   const [isOpen, setOpen] = useToggle(false);
 
   const allItems = useMemo(() => {
-    const items = props.available.map((el) => ({ title: el }));
+    const items = available.map((el) => ({ title: el }));
 
-    if (Array.isArray(props.value) && props.value.length) {
-      items.forEach((el) => {
-        el.checked = props.value.includes(el.title);
-      });
+    if (Array.isArray(value) && value.length) {
+      items.map((el) => ({
+        ...el,
+        checked: value.includes(el.title),
+      }));
     }
     return items;
-  }, [props.available, props.value]);
+  }, [available, value]);
 
   const selectedTitles = useMemo(() => allItems.filter((el) => el.checked).map((el) => el.title),
     [allItems]);
 
-  const title = useMemo(() => (selectedTitles.length ? selectedTitles.join(', ') : props.defaultTitle),
-    [selectedTitles, props.defaultTitle]);
+  const title = useMemo(() => (selectedTitles.length ? selectedTitles.join(', ') : defaultTitle),
+    [selectedTitles, defaultTitle]);
 
   const onCheck = (el, state) => {
     const selected = [...selectedTitles];
@@ -50,7 +47,7 @@ export default function DropdownSelector(props) {
       <div className="DropdownSelector">
         <div
           tabIndex={0}
-          className={`Input FormItemInput DropdownButtonTriangle DropdownSelectorButton ${props.markInvalid ? 'Invalid' : ''}`}
+          className={`Input FormItemInput DropdownButtonTriangle DropdownSelectorButton ${markInvalid ? 'Invalid' : ''}`}
           onKeyDown={onKeyClick}
           onClick={setOpen}
         >
@@ -75,3 +72,17 @@ export default function DropdownSelector(props) {
     </>
   );
 }
+
+DropdownSelector.propTypes = {
+  defaultTitle: PropTypes.string,
+  value: PropTypes.arrayOf(PropTypes.string),
+  available: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  markInvalid: PropTypes.bool,
+};
+
+DropdownSelector.defaultProps = {
+  defaultTitle: 'Select',
+  value: [],
+  markInvalid: false,
+};

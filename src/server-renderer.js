@@ -60,7 +60,7 @@ function serverRenderer() {
       return;
     }
 
-    const stats = require('../dev/react-loadable.json');
+    const stats = import('../dev/react-loadable.json');
     const bundles = getBundles(stats, modules);
 
     const styles = bundles.filter((bundle) => bundle.file.endsWith('.css'));
@@ -106,5 +106,5 @@ process.on('SIGINT', closeServer)
   .on('unhandledRejection',
     (error) => {
       console.error(`Unhandled Rejection at Promise: ${error} `);
-      // closeServer();
+      closeServer();
     });

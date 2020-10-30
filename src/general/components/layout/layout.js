@@ -2,6 +2,34 @@ import React from 'react';
 import './layout.scss';
 import PropTypes from 'prop-types';
 
+export default function Layout(props) {
+  const { header, children, footer } = props;
+
+  return (
+    <div className="LayoutWrapper">
+      <div className="Layout">
+        {
+                    header && (
+                    <div className="Layout-Header">
+                        {header}
+                    </div>
+                    )
+                }
+        <div className="Layout-Content">
+          {children}
+        </div>
+        {
+                    footer && (
+                    <div className="Layout-Footer">
+                        {footer}
+                    </div>
+                    )
+                }
+      </div>
+    </div>
+  );
+}
+
 Layout.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -11,28 +39,7 @@ Layout.propTypes = {
   header: PropTypes.node,
 };
 
-export default function Layout(props) {
-  return (
-    <div className="LayoutWrapper">
-      <div className="Layout">
-        {
-                    props.header && (
-                    <div className="Layout-Header">
-                        {props.header}
-                    </div>
-                    )
-                }
-        <div className="Layout-Content">
-          {props.children}
-        </div>
-        {
-                    props.footer && (
-                    <div className="Layout-Footer">
-                        {props.footer}
-                    </div>
-                    )
-                }
-      </div>
-    </div>
-  );
-}
+Layout.defaultProps = {
+  footer: null,
+  header: null,
+};

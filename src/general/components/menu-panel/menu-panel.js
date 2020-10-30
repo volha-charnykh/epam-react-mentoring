@@ -9,20 +9,19 @@ export const menuItemType = PropTypes.shape({
   selected: PropTypes.bool,
 });
 
-MenuPanel.propTypes = {
-  items: PropTypes.arrayOf(menuItemType).isRequired,
-  closable: PropTypes.bool,
-  onClose: PropTypes.func,
-  onItemSelected: PropTypes.func.isRequired,
-};
-
 export default function MenuPanel(props) {
-  const selectItem = useCallback((item) => props.onItemSelected(item), [props.onItemSelected]);
+  const {
+    items, closable, onClose, onItemSelected,
+  } = props;
+  const selectItem = useCallback((item) => props.onItemSelected(item), [onItemSelected]);
 
   return (
-    <Panel closable={props.closable} onClose={props.onClose}>
+    <Panel
+      closable={closable}
+      onClose={onClose}
+    >
       {
-                props.items.map((item) => (
+                items.map((item) => (
                   <span
                     className="MenuPanelItem"
                     key={item.id}
@@ -35,3 +34,15 @@ export default function MenuPanel(props) {
     </Panel>
   );
 }
+
+MenuPanel.propTypes = {
+  items: PropTypes.arrayOf(menuItemType).isRequired,
+  closable: PropTypes.bool,
+  onClose: PropTypes.func,
+  onItemSelected: PropTypes.func.isRequired,
+};
+
+MenuPanel.defaultProps = {
+  closable: false,
+  onClose: () => console.error('MenuPanel props onClose isn\'t provided'),
+};

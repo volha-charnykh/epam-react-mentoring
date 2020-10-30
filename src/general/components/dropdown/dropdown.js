@@ -3,20 +3,14 @@ import './dropdown.scss';
 import '../../styles/buttons.scss';
 import PropTypes from 'prop-types';
 import MenuPanel, { menuItemType } from '../menu-panel/menu-panel';
-import { useToggle } from '../../hooks/toggle';
-
-Dropdown.propTypes = {
-  items: PropTypes.arrayOf(menuItemType).isRequired,
-  selected: menuItemType,
-  hideTriangle: PropTypes.bool,
-  onItemSelected: PropTypes.func.isRequired,
-};
+import useToggle from '../../hooks/toggle';
 
 export default function Dropdown(props) {
   const [isOpen, setOpen] = useToggle();
+  const { selected, items, hideTriangle } = props;
 
-  const title = useMemo(() => props.selected && props.selected.title || 'Select Option',
-    [props.selected.title]);
+  const title = useMemo(() => (selected && selected.title) || 'Select Option',
+    [selected.title]);
 
   const onItemSelected = (el) => {
     setOpen();
@@ -25,7 +19,7 @@ export default function Dropdown(props) {
   return (
     <div className="DropdownContainer">
       <div
-        className={`DropdownButton ${!props.hideTriangle && 'DropdownButtonTriangle'}`}
+        className={`DropdownButton ${!hideTriangle && 'DropdownButtonTriangle'}`}
         onClick={setOpen}
       >
         {title}
@@ -34,7 +28,7 @@ export default function Dropdown(props) {
                 isOpen
                 && (
                 <MenuPanel
-                  items={props.items}
+                  items={items}
                   onItemSelected={onItemSelected}
                 />
                 )
@@ -42,3 +36,15 @@ export default function Dropdown(props) {
     </div>
   );
 }
+
+Dropdown.propTypes = {
+  items: PropTypes.arrayOf(menuItemType).isRequired,
+  selected: menuItemType,
+  hideTriangle: PropTypes.bool,
+  onItemSelected: PropTypes.func.isRequired,
+};
+
+Dropdown.defaultProps = {
+  selected: [],
+  hideTriangle: false,
+};

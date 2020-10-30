@@ -16,28 +16,29 @@ export default function DeleteDialog() {
   const dialogs = useSelector(selectDialogs);
   const dispatch = useDispatch();
 
-  const onDialogClose = useCallback(() => dispatch(setConfirmationDialog(null)), [dispatch, setConfirmationDialog]);
+  const onDialogClose = useCallback(() => dispatch(setConfirmationDialog(null)),
+    [dispatch, setConfirmationDialog]);
 
   const onDelete = () => {
     dispatch(deleteFilm(selectedFilm,
-      (dispatch) => {
-        dispatch(setResultPopup({
+      (disp) => {
+        disp(setResultPopup({
           title: 'Congratulations!',
           description: 'The movie has been deleted successfully',
           type: 'Success',
         }));
-        dispatch(loadFilms());
-        dispatch(setSelectedFilm(null));
-        dispatch(setConfirmationDialog(null));
+        disp(loadFilms());
+        disp(setSelectedFilm(null));
+        disp(setConfirmationDialog(null));
       },
-      (dispatch, err) => {
-        dispatch(setResultPopup({
+      (disp, err) => {
+        disp(setResultPopup({
           title: 'Oops!',
           description: `Can't delete movie. ${err}`,
           type: 'Failure',
         }));
-        dispatch(setSelectedFilm(null));
-        dispatch(setConfirmationDialog(null));
+        disp(setSelectedFilm(null));
+        disp(setConfirmationDialog(null));
       }));
   };
 

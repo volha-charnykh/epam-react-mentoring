@@ -2,29 +2,21 @@ import React, { useCallback, useMemo, useState } from 'react';
 import './tabs.scss';
 import PropTypes from 'prop-types';
 
-Tabs.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  activeTab: PropTypes.string,
-  right: PropTypes.node,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  onTabClicked: PropTypes.func.isRequired,
-};
-
 export default function Tabs(props) {
   const tabsNode = React.createRef();
   const [offset, setOffset] = useState(0);
   const [limit] = useState(10);
-  const total = props.tabs.length;
+  const {
+    activeTab, right, children, tabs, onTabClicked,
+  } = props;
+  const total = tabs.length;
 
-  const createOnClickItem = useCallback((el) => props.onTabClicked(el), [props.onTabClicked]);
-  const onGoLeft = useCallback((offset) => setOffset(offset - 1), []);
-  const onGoRight = useCallback((offset) => setOffset(offset + 1), []);
+  const createOnClickItem = useCallback((el) => onTabClicked(el), [onTabClicked]);
+  const onGoLeft = useCallback((off) => setOffset(off - 1), []);
+  const onGoRight = useCallback((off) => setOffset(off + 1), []);
 
-  const visibleTabs = useMemo(() => props.tabs.slice(offset, offset + limit), [props.tabs, offset]);
-  const isLastPart = useMemo(() => offset + limit === total, [props.tabs, offset]);
+  const visibleTabs = useMemo(() => tabs.slice(offset, offset + limit), [tabs, offset]);
+  const isLastPart = useMemo(() => offset + limit === total, [tabs, offset]);
 
   // if(tabsNode.current.scrollWidth > tabs)
 
@@ -48,7 +40,7 @@ export default function Tabs(props) {
                                 visibleTabs.map((el) => (
                                   <div
                                     key={el}
-                                    className={`Tab ${el === props.activeTab ? 'Active' : ''}`}
+                                    className={`Tab ${el === activeTab ? 'Active' : ''}`}
                                     onClick={createOnClickItem.bind(this, el)}
                                   >
                                     {el}
@@ -65,17 +57,33 @@ export default function Tabs(props) {
           </>
         </div>
         {
-                    props.right
+                    right
                     && (
                     <div className="RightSide">
-                      {props.right}
+                      {right}
                     </div>
                     )
                 }
       </div>
       <div className="TabsContent">
-        {props.children}
+        {children}
       </div>
     </>
   );
 }
+
+Tabs.propTypes = {
+  tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  activeTab: PropTypes.string,
+  right: PropTypes.node,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  onTabClicked: PropTypes.func.isRequired,
+};
+
+Tabs.defaultProps = {
+  activeTab: '',
+  right: null,
+};
