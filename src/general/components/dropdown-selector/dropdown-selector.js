@@ -16,7 +16,7 @@ export default function DropdownSelector(props) {
     const items = available.map((el) => ({ title: el }));
 
     if (Array.isArray(value) && value.length) {
-      items.map((el) => ({
+      return items.map((el) => ({
         ...el,
         checked: value.includes(el.title),
       }));
@@ -30,9 +30,9 @@ export default function DropdownSelector(props) {
   const title = useMemo(() => (selectedTitles.length ? selectedTitles.join(', ') : defaultTitle),
     [selectedTitles, defaultTitle]);
 
-  const onCheck = (el, state) => {
+  const onCheck = (el, checked) => {
     const selected = [...selectedTitles];
-    if (state) {
+    if (checked) {
       selected.push(el.title);
     } else {
       selected.splice(selected.indexOf(el.title), 1);

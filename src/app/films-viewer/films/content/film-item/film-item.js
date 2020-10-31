@@ -6,6 +6,7 @@ import noImage from '../../../../../img/no-image.jpg';
 import filmType from '../../../../util/prop-types/film.type';
 import { menuItemType } from '../../../../../general/components/menu-panel/menu-panel';
 
+// PATTERN: Function Component
 export default function FilmItem(props) {
   const { clickHandler, actions, film } = props;
   const [displayMenu, setDisplayMenu] = useState(false);

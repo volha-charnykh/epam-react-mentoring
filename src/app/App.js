@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.scss';
-import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
@@ -28,7 +27,9 @@ const Home = Loadable({
   loading: Loading,
 });
 
+// PATTERN: Lazy loading
 const App = ({
+  // eslint-disable-next-line react/prop-types
   Router, location, context, store,
 }) => (
   <React.StrictMode>
@@ -79,12 +80,5 @@ const App = ({
     </AppErrorBoundary>
   </React.StrictMode>
 );
-
-App.propTypes = {
-  Router: PropTypes.shape.isRequired,
-  location: PropTypes.shape.isRequired,
-  context: PropTypes.shape.isRequired,
-  store: PropTypes.shape.isRequired,
-};
 
 export default App;

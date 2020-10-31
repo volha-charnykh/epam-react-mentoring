@@ -3,6 +3,7 @@ import React from 'react';
 import '../../styles/form.scss';
 import { useField } from 'formik';
 
+// PATTERN: JSX spread attributes
 export default function FormItem(props) {
   const [field, meta] = useField(props);
   const { label, type } = props;

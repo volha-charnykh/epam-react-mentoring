@@ -15,19 +15,20 @@ function renderHTML(html, preloadedState, styles = [], scripts = []) {
           <link rel="shortcut icon" href="favicon.png">
           <meta charset=utf-8>
           <title>React Server Side Rendering</title>
-           ${styles.map((style) => `<link href="/${style.file}" rel="stylesheet"/>`).join('\n')}
+           ${styles.map((style) => `<link href="/${style?.file}" rel="stylesheet"/>`).join('\n')}
         </head>
         <body>
           <div id="root">${html}</div>
           <script>
             window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
           </script>
-          ${scripts.map((script) => `<script src="${script.file}"></script>`).join('\n')}
+          ${scripts.map((script) => `<script src="${script?.file}"></script>`).join('\n')}
         </body>
       </html>
   `;
 }
 
+// PATTERN: Server Side Rendering
 function serverRenderer() {
   return async (req, res) => {
     const store = createStore();
@@ -60,11 +61,13 @@ function serverRenderer() {
       return;
     }
 
-    const stats = import('../dev/react-loadable.json');
+    // eslint-disable-next-line global-require
+    const stats = require('../dev/react-loadable.json');
+
     const bundles = getBundles(stats, modules);
 
-    const styles = bundles.filter((bundle) => bundle.file.endsWith('.css'));
-    const scripts = bundles.filter((bundle) => bundle.file.endsWith('.js'));
+    const styles = bundles.filter((bundle) => bundle?.file?.endsWith('.css'));
+    const scripts = bundles.filter((bundle) => bundle?.file?.endsWith('.js'));
 
     await Promise.all(contextValue.requests);
     delete contextValue.requests;

@@ -7,6 +7,7 @@ const AddEditFilmDialog = React.lazy(() => import('./add-edit-dialog/add-edit-fi
 const DeleteDialog = React.lazy(() => import('./delete-dialog'));
 const ResultPopup = React.lazy(() => import('../../../../general/components/result-popup/result-popup'));
 
+// PATTERN: Conditional rendering
 export default function FilmDialogContainer() {
   const dialogs = useSelector(selectDialogs);
   const dispatch = useDispatch();

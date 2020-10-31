@@ -5,6 +5,7 @@ import Layout from '../../general/components/layout/layout';
 import Footer from '../footer/footer';
 import Logo from '../../general/components/logo/logo';
 
+// PATTERN: High Order Component
 export default class AppErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
