@@ -1,41 +1,40 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+    mode: 'development',
+
+    output: {
+        filename: 'js/[name].js',
+        path: path.resolve('./build'),
+    },
+
     resolve: {
-        modules: [path.join(__dirname, 'src'), 'node_modules'],
-        extensions:  ['.js'],
+        extensions: ['.js'],
         alias: {
             'react-dom': '@hot-loader/react-dom',
-        }
-    },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
         },
     },
+
     module: {
         rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
-            },
-            {
-                test: /\.html$/,
-                loader: 'html-loader'
+                use: 'babel-loader',
             },
             {
                 test: /\.css$/,
+                include: /src/,
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
-                    'css-loader',
-
-                ]
+                    'css-loader'
+                ],
             },
             {
-                test: /\.s[ac]ss$/i,
+                test: /\.scss$/,
+                include: /src/,
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
                     'css-loader',
@@ -50,14 +49,13 @@ module.exports = {
                     publicPath: '/'
                 }
             }
-        ]
+        ],
     },
     plugins: [
-        new HtmlWebPackPlugin({
-            template: './src/index.html',
-            filename: './index.html',
-            favicon: "./src/img/favicon.png",
-            minify: { collapseWhitespace: true }
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: './src/img/favicon.png' },
+            ]
         }),
         new MiniCssExtractPlugin({
             filename: "styles.css",

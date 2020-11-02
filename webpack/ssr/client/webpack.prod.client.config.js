@@ -1,9 +1,8 @@
-const path = require('path');
 const {merge} = require('webpack-merge');
 const common = require('../webpack.common.config.js');
 const webpack = require('webpack');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(common, {
     name: 'client',
@@ -12,11 +11,11 @@ module.exports = merge(common, {
     entry: [
         './src/client.js',
     ],
-    output: {
-        path: path.resolve(__dirname, '../../../build')
-    },
     plugins: [
         new webpack.HashedModuleIdsPlugin(),
         new ReactLoadablePlugin({ filename: `./build/react-loadable.json` }),
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css',
+        }),
     ],
 });

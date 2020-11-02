@@ -1,8 +1,7 @@
-const path = require('path');
 const {merge} = require('webpack-merge');
 const common = require('../webpack.common.config.js');
 const webpack = require('webpack');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
 
 module.exports = merge(common, {
@@ -15,14 +14,12 @@ module.exports = merge(common, {
         './src/client.js',
     ],
 
-    output: {
-        publicPath: '/',
-        path: path.resolve(__dirname, '../../../dev')
-    },
-    devtool: 'source-map',
 
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new ReactLoadablePlugin({ filename: `./dev/react-loadable.json` }),
-    ]
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css',
+        }),
+        new ReactLoadablePlugin({ filename: `./build/react-loadable.json` }),
+    ].filter(Boolean),
 });

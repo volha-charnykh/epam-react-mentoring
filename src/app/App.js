@@ -32,7 +32,6 @@ const App = ({
   // eslint-disable-next-line react/prop-types
   Router, location, context, store,
 }) => (
-  <React.StrictMode>
     <AppErrorBoundary>
       <Provider store={store}>
         <Router
@@ -78,7 +77,6 @@ const App = ({
         </Router>
       </Provider>
     </AppErrorBoundary>
-  </React.StrictMode>
 );
 
 export default App;
