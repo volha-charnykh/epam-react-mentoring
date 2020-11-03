@@ -12,32 +12,30 @@ const webpackConfig = require('../webpack/ssr/webpack.dev.config');
 const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler));
-app.use(webpackHotMiddleware(compiler.compilers.find(c => c.name === 'client')));
+app.use(webpackHotMiddleware(compiler.compilers.find((c) => c.name === 'client')));
 app.use(webpackHotServerMiddleware(compiler));
 
-
 const server = app.listen(port, () => {
-    console.info(`Express listening on port ${port}`);
+  console.info(`Express listening on port ${port}`);
 });
 
 const closeServer = () => {
-    if (server) {
-        server.close(() => {
-            console.info('Server was closed successfully.');
-        });
-    }
+  if (server) {
+    server.close(() => {
+      console.info('Server was closed successfully.');
+    });
+  }
 };
 
 process.on('SIGINT', closeServer)
-    .on('SIGTERM', closeServer)
-    .on('uncaughtException',
-        (error) => {
-            console.error(`Uncaught Exception thrown: ${error}`);
-            closeServer();
-        })
-    .on('unhandledRejection',
-        (error) => {
-            console.error(`Unhandled Rejection at Promise: ${error} `);
-            closeServer();
-        });
-
+  .on('SIGTERM', closeServer)
+  .on('uncaughtException',
+    (error) => {
+      console.error(`Uncaught Exception thrown: ${error}`);
+      closeServer();
+    })
+  .on('unhandledRejection',
+    (error) => {
+      console.error(`Unhandled Rejection at Promise: ${error} `);
+      closeServer();
+    });

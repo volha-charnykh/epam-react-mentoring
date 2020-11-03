@@ -32,51 +32,51 @@ const App = ({
   // eslint-disable-next-line react/prop-types
   Router, location, context, store,
 }) => (
-    <AppErrorBoundary>
-      <Provider store={store}>
-        <Router
-          location={location}
-          context={context}
-        >
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <Redirect to="/home" />
-              )}
-            />
-            <Route
-              exact
-              path="/home"
-            >
-              <Home />
-            </Route>
-            <Route
-              exact
-              path="/no-films"
-            >
-              <FilmsViewer><NoFilms /></FilmsViewer>
-            </Route>
-            <Route path="/films">
-              <FilmsViewer><Films /></FilmsViewer>
-            </Route>
-            <Route
-              exact
-              path="/page-not-found"
-            >
-              <PageNotFound />
-            </Route>
-            <Route
-              path="*"
-              render={() => (
-                <Redirect to="/page-not-found" />
-              )}
-            />
-          </Switch>
-        </Router>
-      </Provider>
-    </AppErrorBoundary>
+  <AppErrorBoundary>
+    <Provider store={store}>
+      <Router
+        location={location}
+        context={context}
+      >
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <Redirect to="/home" />
+            )}
+          />
+          <Route
+            exact
+            path="/home"
+          >
+            <Home />
+          </Route>
+          <Route
+            exact
+            path="/no-films"
+          >
+            <FilmsViewer><NoFilms /></FilmsViewer>
+          </Route>
+          <Route path="/films">
+            <FilmsViewer><Films /></FilmsViewer>
+          </Route>
+          <Route
+            exact
+            path="/page-not-found"
+          >
+            <PageNotFound />
+          </Route>
+          <Route
+            path="*"
+            render={() => (
+              <Redirect to="/page-not-found" />
+            )}
+          />
+        </Switch>
+      </Router>
+    </Provider>
+  </AppErrorBoundary>
 );
 
 export default App;

@@ -5,16 +5,25 @@ import '../../styles/form.scss';
 import PropTypes from 'prop-types';
 
 export default function SearchBox(props) {
-  const { searchString, searchButtonLabel } = props;
+  const { searchString, searchButtonLabel, search } = props;
   const [text, setText] = useState(searchString);
 
-  useEffect(() => setText(searchString), [searchString]);
+  useEffect(() => {
+    setText(searchString);
+  }, [searchString]);
 
-  const onTextChange = useCallback((event) => setText(event.target.value), []);
+  const onTextChange = useCallback((event) => {
+    setText(event.target.value);
+  }, []);
 
-  const search = () => {
-    props.search(text);
-  };
+  const searchStr = useCallback(() => {
+    if (text && text !== searchString) {
+      search(text);
+    }
+  }, [search]);
+
+  const onKeyDown = useCallback((event) => event.key === 'Enter' && searchStr(), [searchStr]);
+
   return (
     <div className="Search">
       <input
@@ -22,12 +31,12 @@ export default function SearchBox(props) {
         className="DarkInput"
         value={text}
         placeholder="What do you want to watch?"
-        onKeyDown={(event) => event.key === 'Enter' && search()}
+        onKeyDown={onKeyDown}
         onChange={onTextChange}
       />
       <div
         className="PrimaryButton"
-        onClick={search}
+        onClick={searchStr}
       >
         {searchButtonLabel}
       </div>

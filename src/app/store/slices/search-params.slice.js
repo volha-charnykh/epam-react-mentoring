@@ -7,6 +7,8 @@ export const searchParamsSlice = createSlice({
     sortType: 'release_date',
     sortOrder: 'desc',
     limit: 20,
+    activeGenre: '',
+    searchString: '',
   },
   reducers: {
     updateActiveGenre: (state, action) => ({ ...state, activeGenre: action.payload }),
@@ -21,29 +23,39 @@ const {
   updateActiveGenre, updateSearchString, updateSortOrder, updateSortType, updateLimit,
 } = searchParamsSlice.actions;
 
-export const setSearchString = (searchString) => (dispatch) => {
-  dispatch(updateSearchString(searchString));
-  dispatch(loadFilms());
+export const setSearchString = (searchString) => (dispatch, getState) => {
+  if (getState().searchParams.searchString !== searchString) {
+    dispatch(updateSearchString(searchString));
+    dispatch(loadFilms());
+  }
 };
 
-export const setActiveGenre = (activeGenre) => (dispatch) => {
-  dispatch(updateActiveGenre(activeGenre));
-  dispatch(loadFilms());
+export const setActiveGenre = (activeGenre) => (dispatch, getState) => {
+  if (getState().searchParams.activeGenre !== activeGenre) {
+    dispatch(updateActiveGenre(activeGenre));
+    dispatch(loadFilms());
+  }
 };
 
-export const setSortType = (sortType) => (dispatch) => {
-  dispatch(updateSortType(sortType));
-  dispatch(loadFilms());
+export const setSortType = (sortType) => (dispatch, getState) => {
+  if (getState().searchParams.sortType !== sortType) {
+    dispatch(updateSortType(sortType));
+    dispatch(loadFilms());
+  }
 };
 
-export const setSortOrder = (sortOrder) => (dispatch) => {
-  dispatch(updateSortOrder(sortOrder));
-  dispatch(loadFilms());
+export const setSortOrder = (sortOrder) => (dispatch, getState) => {
+  if (getState().searchParams.sortOrder !== sortOrder) {
+    dispatch(updateSortOrder(sortOrder));
+    dispatch(loadFilms());
+  }
 };
 
-export const setLimit = (limit) => (dispatch) => {
-  dispatch(updateLimit(limit));
-  dispatch(loadFilms());
+export const setLimit = (limit) => (dispatch, getState) => {
+  if (getState().searchParams.limit !== limit) {
+    dispatch(updateLimit(limit));
+    dispatch(loadFilms());
+  }
 };
 
 export const selectSearchParams = (state) => state.searchParams;

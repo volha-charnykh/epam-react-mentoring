@@ -24,8 +24,8 @@ export default function FilmsList() {
   const title = query.get('title');
 
   useServerEffect([], 'films', () => {
-    dispatch(setActiveGenre(genre));
-    dispatch(setSearchString(title));
+    dispatch(setActiveGenre(genre || ''));
+    dispatch(setSearchString(title || ''));
     return new Promise((resolve) => resolve((!films || (Array.isArray(films) && !films.length))
                 && dispatch(loadFilms())));
   });
@@ -35,8 +35,8 @@ export default function FilmsList() {
   }, []);
 
   useEffect(() => {
-    dispatch(setActiveGenre(genre));
-    dispatch(setSearchString(title));
+    dispatch(setActiveGenre(genre || ''));
+    dispatch(setSearchString(title || ''));
   }, [genre, title]);
 
   useEffect(() => {

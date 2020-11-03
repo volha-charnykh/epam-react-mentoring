@@ -1,14 +1,14 @@
 import React from 'react';
-import {renderToString} from 'react-dom/server';
-import {StaticRouter} from 'react-router-dom';
+import { renderToString } from 'react-dom/server';
+import { StaticRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import {getBundles} from 'react-loadable/webpack';
+import { getBundles } from 'react-loadable/webpack';
 import App from './app/App';
-import {RequestContext} from './general/hooks/server-effect';
+import { RequestContext } from './general/hooks/server-effect';
 import createStore from './app/store';
 
 function renderHTML(html, preloadedState, styles = [], scripts = []) {
-    return `
+  return `
       <!doctype html>
       <html>
         <head>
@@ -29,52 +29,52 @@ function renderHTML(html, preloadedState, styles = [], scripts = []) {
 }
 
 export default function serverRenderer() {
-    return async (req, res) => {
-        const store = createStore();
-        const context = {};
-        const contextValue = {requests: []};
-        const modules = [];
+  return async (req, res) => {
+    const store = createStore();
+    const context = {};
+    const contextValue = { requests: [] };
+    const modules = [];
 
-        const renderRoot = () => (
-            <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
-                <RequestContext.Provider value={contextValue}>
-                    <div>Server</div>
-                    <App
-                        context={context}
-                        location={req.url}
-                        Router={StaticRouter}
-                        store={store}
-                    />
-                </RequestContext.Provider>
-            </Loadable.Capture>
-        );
+    const renderRoot = () => (
+      <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
+        <RequestContext.Provider value={contextValue}>
+          <div>Server</div>
+          <App
+            context={context}
+            location={req.url}
+            Router={StaticRouter}
+            store={store}
+          />
+        </RequestContext.Provider>
+      </Loadable.Capture>
+    );
 
-        await Loadable.preloadAll();
+    await Loadable.preloadAll();
 
-        renderToString(renderRoot());
+    renderToString(renderRoot());
 
-        if (context.url) {
-            res.writeHead(302, {
-                Location: context.url,
-            });
-            res.end();
-            return;
-        }
+    if (context.url) {
+      res.writeHead(302, {
+        Location: context.url,
+      });
+      res.end();
+      return;
+    }
 
-        // eslint-disable-next-line global-require
-        const stats = require('../build/react-loadable.json');
+    // eslint-disable-next-line global-require
+    const stats = require('../build/react-loadable.json');
 
-        const bundles = getBundles(stats, modules);
+    const bundles = getBundles(stats, modules);
 
-        const styles = bundles.filter((bundle) => bundle?.file?.endsWith('.css'));
-        const scripts = bundles.filter((bundle) => bundle?.file?.endsWith('.js'));
+    const styles = bundles.filter((bundle) => bundle?.file?.endsWith('.css'));
+    const scripts = bundles.filter((bundle) => bundle?.file?.endsWith('.js'));
 
-        await Promise.all(contextValue.requests);
-        delete contextValue.requests;
+    await Promise.all(contextValue.requests);
+    delete contextValue.requests;
 
-        const htmlString = renderToString(renderRoot());
-        const preloadedState = store.getState();
+    const htmlString = renderToString(renderRoot());
+    const preloadedState = store.getState();
 
-        res.send(renderHTML(htmlString, preloadedState, styles, scripts));
-    };
+    res.send(renderHTML(htmlString, preloadedState, styles, scripts));
+  };
 }
